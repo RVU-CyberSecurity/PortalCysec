@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>InternTrack Pro - Project Management System</title>
+    <title>InternTrack Pro - Advanced Project Management with GitHub Integration</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -26,36 +26,21 @@
             --blue: #4a9eff;
             --blue-bg: rgba(74,158,255,0.1);
             --amber: #f5a623;
-            --amber-bg: rgba(245,166,35,0.1);
             --red: #ff5757;
             --red-bg: rgba(255,87,87,0.1);
-            --purple: #a78bfa;
             --r: 10px;
             --r-sm: 6px;
         }
 
-        *, *::before, *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        html, body {
-            height: 100%;
-            font-family: 'Sora', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            font-size: 14px;
-            -webkit-font-smoothing: antialiased;
-        }
-
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body { height: 100%; font-family: 'Sora', system-ui; background: var(--bg); color: var(--text); font-size: 14px; -webkit-font-smoothing: antialiased; }
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
 
         /* ═══════════════════════════════════════════════════════════
-           LOGIN SCREEN
+           AUTH SCREENS
         ═══════════════════════════════════════════════════════════ */
-        .login-screen {
+        .auth-screen {
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -64,14 +49,14 @@
             overflow: hidden;
         }
 
-        .login-bg {
+        .auth-bg {
             position: absolute;
             inset: 0;
             background-image: radial-gradient(ellipse 80% 70% at 50% 50%, rgba(45,232,176,0.08) 0%, transparent 70%);
             pointer-events: none;
         }
 
-        .login-container {
+        .auth-container {
             position: relative;
             z-index: 10;
             background: var(--surface);
@@ -79,49 +64,73 @@
             border-radius: 14px;
             padding: 40px;
             width: 90%;
-            max-width: 420px;
+            max-width: 450px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.4);
         }
 
-        .login-logo {
+        .auth-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .logo-large {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
             display: flex;
             align-items: center;
-            gap: 12px;
-            margin-bottom: 8px;
+            justify-content: center;
+            gap: 10px;
         }
 
         .logo-icon {
-            width: 40px;
-            height: 40px;
+            width: 44px;
+            height: 44px;
             background: var(--accent-bg);
             border-radius: var(--r-sm);
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--accent);
-            font-size: 20px;
+            font-size: 24px;
             border: 1px solid rgba(45,232,176,0.2);
         }
 
-        .logo-text {
-            font-size: 22px;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-        }
-
-        .accent { color: var(--accent); }
-
-        .login-tagline {
+        .auth-tagline {
             font-size: 13px;
             color: var(--text2);
-            margin-bottom: 24px;
         }
 
-        .login-divider {
-            height: 1px;
-            background: var(--border);
-            margin-bottom: 20px;
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 24px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 12px;
         }
+
+        .tab {
+            flex: 1;
+            padding: 8px 12px;
+            text-align: center;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            color: var(--text2);
+            transition: all 0.2s;
+            font-size: 13px;
+            font-weight: 500;
+            background: none;
+            border: none;
+            font-family: inherit;
+        }
+
+        .tab.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+
+        .form-section { display: none; }
+        .form-section.active { display: block; }
 
         .form-group {
             margin-bottom: 16px;
@@ -137,7 +146,7 @@
             letter-spacing: 0.5px;
         }
 
-        .form-input {
+        .form-input, select {
             width: 100%;
             background: var(--bg3);
             border: 1px solid var(--border);
@@ -150,16 +159,13 @@
             transition: border-color 0.2s;
         }
 
-        .form-input:focus {
+        .form-input:focus, select:focus {
             border-color: rgba(45,232,176,0.4);
         }
 
         .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 11px 18px;
+            width: 100%;
+            padding: 11px;
             border-radius: var(--r-sm);
             font-size: 13px;
             font-weight: 600;
@@ -167,34 +173,70 @@
             cursor: pointer;
             border: none;
             transition: all 0.2s;
-            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 10px;
         }
 
         .btn-primary {
             background: var(--accent);
             color: var(--bg);
-            width: 100%;
-            margin-bottom: 12px;
         }
 
         .btn-primary:hover {
             background: var(--accent2);
-            transform: translateY(-1px);
         }
 
         .btn-github {
             background: var(--text);
             color: var(--bg);
-            width: 100%;
-            margin-bottom: 12px;
         }
 
         .btn-github:hover {
             background: #fff;
         }
 
-        .login-error {
-            padding: 12px;
+        .btn-secondary {
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            color: var(--text2);
+        }
+
+        .btn-secondary:hover {
+            background: var(--surface2);
+            color: var(--text);
+        }
+
+        .auth-divider {
+            text-align: center;
+            margin: 16px 0;
+            font-size: 12px;
+            color: var(--text3);
+            position: relative;
+        }
+
+        .auth-divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--border);
+            z-index: 1;
+        }
+
+        .auth-divider span {
+            position: relative;
+            z-index: 2;
+            background: var(--surface);
+            padding: 0 10px;
+        }
+
+        .error-message {
+            padding: 10px 12px;
             background: var(--red-bg);
             border: 1px solid rgba(255,87,87,0.2);
             border-radius: var(--r-sm);
@@ -202,6 +244,31 @@
             font-size: 12px;
             margin-bottom: 12px;
             display: none;
+        }
+
+        .success-message {
+            padding: 10px 12px;
+            background: var(--accent-bg);
+            border: 1px solid rgba(45,232,176,0.2);
+            border-radius: var(--r-sm);
+            color: var(--accent);
+            font-size: 12px;
+            margin-bottom: 12px;
+            display: none;
+        }
+
+        .github-connect {
+            text-align: center;
+            padding: 20px;
+            background: var(--bg3);
+            border-radius: var(--r);
+            margin-bottom: 16px;
+        }
+
+        .github-connect p {
+            font-size: 12px;
+            color: var(--text2);
+            margin-bottom: 12px;
         }
 
         /* ═══════════════════════════════════════════════════════════
@@ -231,7 +298,6 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            letter-spacing: -0.3px;
         }
 
         .hdr-right {
@@ -264,15 +330,13 @@
             font-weight: 700;
         }
 
-        .role-badge {
-            font-size: 10px;
-            font-weight: 600;
-            background: var(--blue-bg);
-            color: var(--blue);
-            padding: 3px 8px;
-            border-radius: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+        .github-status {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--accent);
+            display: inline-block;
+            margin-left: 4px;
         }
 
         .icon-btn {
@@ -342,8 +406,6 @@
             font-weight: 600;
         }
 
-        .nav-item i { font-size: 17px; flex-shrink: 0; }
-
         .main-content {
             flex: 1;
             overflow-y: auto;
@@ -392,23 +454,6 @@
             margin-bottom: 16px;
         }
 
-        .card-title {
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--text2);
-            margin-bottom: 14px;
-            display: flex;
-            align-items: center;
-            gap: 7px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .card-title i {
-            font-size: 16px;
-            color: var(--accent);
-        }
-
         .projects-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -435,14 +480,13 @@
             font-size: 14px;
             font-weight: 600;
             color: var(--text);
-            margin-bottom: 6px;
+            margin-bottom: 8px;
         }
 
-        .project-info {
+        .project-guide {
             font-size: 12px;
             color: var(--text2);
             margin-bottom: 12px;
-            line-height: 1.5;
         }
 
         .project-stats {
@@ -452,16 +496,12 @@
             padding: 12px;
             background: var(--bg3);
             border-radius: var(--r-sm);
-            margin-bottom: 14px;
+            margin-bottom: 12px;
             font-size: 12px;
         }
 
-        .stat-item {
-            text-align: center;
-        }
-
         .stat-value {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 700;
             color: var(--accent);
         }
@@ -469,227 +509,36 @@
         .stat-label {
             color: var(--text3);
             font-size: 10px;
-            margin-top: 3px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
-        .project-actions {
-            display: flex;
-            gap: 8px;
-        }
-
-        .project-actions .btn {
-            flex: 1;
-            padding: 8px 12px;
-            font-size: 12px;
-            justify-content: center;
-        }
-
-        /* Detail View */
-        .detail-container {
-            display: none;
-        }
-
-        .detail-container.active {
-            display: block;
-        }
-
-        .detail-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: start;
-            margin-bottom: 24px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .detail-title {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--text);
-        }
-
-        .detail-guide {
-            font-size: 12px;
-            color: var(--text2);
-            margin-top: 4px;
-        }
-
-        .btn-secondary {
-            background: var(--bg3);
-            border: 1px solid var(--border);
-            color: var(--text2);
-            padding: 8px 14px;
-        }
-
-        .btn-secondary:hover {
-            background: var(--surface2);
-            color: var(--text);
-        }
-
-        .detail-section {
-            margin-bottom: 28px;
-        }
-
-        .section-title {
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--text);
-            margin-bottom: 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .btn-add {
-            background: var(--accent);
-            color: var(--bg);
-            border: none;
-            padding: 8px 14px;
-            border-radius: var(--r-sm);
-            font-size: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .btn-add:hover {
-            background: var(--accent2);
-        }
-
-        .tags-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .tag {
-            background: var(--accent-bg);
-            border: 1px solid rgba(45,232,176,0.2);
-            color: var(--accent);
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .tag-remove {
-            cursor: pointer;
-            color: var(--red);
-            font-weight: bold;
-        }
-
-        .tag-remove:hover {
-            color: #ff7777;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 32px;
-            color: var(--text3);
-            background: var(--bg3);
-            border: 1px solid var(--border);
-            border-radius: var(--r);
-        }
-
-        .task-item {
-            background: var(--surface);
-            border-left: 3px solid var(--accent);
-            padding: 14px 16px;
-            border-radius: var(--r-sm);
-            margin-bottom: 10px;
-            border: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: start;
-        }
-
-        .task-content {
-            flex: 1;
-        }
-
-        .task-title {
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--text);
-            margin-bottom: 4px;
-        }
-
-        .task-dates {
-            font-size: 11px;
-            color: var(--text3);
-            margin-bottom: 4px;
-        }
-
-        .task-desc {
-            font-size: 12px;
-            color: var(--text2);
-            margin-top: 6px;
-        }
-
-        .submission-item {
-            background: var(--bg3);
-            border: 1px solid var(--border);
-            border-radius: var(--r-sm);
-            padding: 12px;
-            margin-bottom: 10px;
-        }
-
-        .submission-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: start;
-            margin-bottom: 8px;
-        }
-
-        .submission-student {
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--text);
-        }
-
-        .submission-task {
-            font-size: 11px;
-            color: var(--text2);
-            margin-top: 3px;
-        }
-
-        .submission-status {
+        .badge {
+            display: inline-block;
             font-size: 10px;
             font-weight: 600;
             padding: 3px 9px;
             border-radius: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .status-pending {
-            background: var(--amber-bg);
-            color: var(--amber);
-        }
-
-        .status-reviewed {
             background: var(--accent-bg);
             color: var(--accent);
         }
 
-        .submission-link {
-            display: inline-block;
-            margin-top: 8px;
-            color: var(--blue);
-            text-decoration: none;
+        .button-group {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .button-group .btn {
+            flex: 1;
+            margin-bottom: 0;
+        }
+
+        .btn-sm {
+            padding: 6px 12px;
             font-size: 12px;
-            font-weight: 500;
         }
 
-        .submission-link:hover {
-            text-decoration: underline;
-        }
-
-        /* Modal */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -756,22 +605,40 @@
             justify-content: flex-end;
         }
 
-        .checkbox-group label {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px;
-            cursor: pointer;
-            border-radius: var(--r-sm);
-            transition: background 0.2s;
+        .table-container {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            overflow: hidden;
         }
 
-        .checkbox-group label:hover {
+        .table-hdr {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 12px;
+            padding: 11px 16px;
             background: var(--bg3);
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--text3);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            border-bottom: 1px solid var(--border);
         }
 
-        .checkbox-group input[type="checkbox"] {
-            accent-color: var(--accent);
+        .table-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 12px;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+            align-items: center;
+            font-size: 13px;
+            transition: background 0.15s;
+        }
+
+        .table-row:hover {
+            background: var(--bg3);
         }
 
         .toast {
@@ -797,98 +664,136 @@
             transform: translateY(0);
         }
 
-        .btn-sm {
-            padding: 5px 10px;
-            font-size: 12px;
+        .toast.success {
+            border-color: rgba(45,232,176,0.3);
+            color: var(--accent);
         }
 
-        .btn-danger {
-            background: var(--red-bg);
+        .toast.error {
+            border-color: rgba(255,87,87,0.3);
             color: var(--red);
-            border: none;
-        }
-
-        .btn-danger:hover {
-            background: var(--red);
-            color: var(--bg);
         }
 
         @media (max-width: 768px) {
             .sidebar { display: none; }
             .modal { width: 90%; }
             .projects-grid { grid-template-columns: 1fr; }
+            .auth-container { width: 95%; max-width: 400px; }
         }
     </style>
 </head>
 <body>
 
 <!-- ═══════════════════════════════════════════════════════════════════
-     LOGIN SCREEN
-═══════════════════════════════════════════════════════════════════ -->
-<div id="loginScreen" class="login-screen" style="display: flex;">
-    <div class="login-bg"></div>
-    <div class="login-container">
-        <div class="login-logo">
-            <span class="logo-icon"><i class="ti ti-building-community"></i></span>
-            <span class="logo-text">Intern<span class="accent">Track</span> Pro</span>
-        </div>
-        <div class="login-tagline">Cybersecurity Internship Management Platform</div>
-        <div class="login-divider"></div>
-        
-        <div id="loginError" class="login-error"></div>
-
-        <div class="form-group">
-            <label class="form-label">GitHub Username</label>
-            <input type="text" id="loginUsername" class="form-input" placeholder="your-github-username">
+     AUTH SCREENS
+════════════════════════════════════════════════════════════════════ -->
+<div id="authScreen" class="auth-screen">
+    <div class="auth-bg"></div>
+    <div class="auth-container">
+        <div class="auth-header">
+            <div class="logo-large">
+                <span class="logo-icon"><i class="ti ti-building-community"></i></span>
+                <div>
+                    <div>Intern<span style="color:var(--accent)">Track</span></div>
+                    <div style="font-size: 11px; color: var(--text2); font-weight: 400;">RVU Cybersecurity</div>
+                </div>
+            </div>
+            <p class="auth-tagline">Advanced Project Management System</p>
         </div>
 
-        <div class="form-group">
-            <label class="form-label">Password</label>
-            <input type="password" id="loginPassword" class="form-input" placeholder="Your password">
+        <div class="tabs">
+            <button class="tab active" onclick="switchAuthTab('login')">Sign In</button>
+            <button class="tab" onclick="switchAuthTab('register')">Register</button>
         </div>
 
-        <div class="form-group">
-            <label class="form-label">Role</label>
-            <select id="loginRole" class="form-input">
-                <option value="">Select your role</option>
-                <option value="admin">Admin</option>
-                <option value="mentor">Mentor/Faculty</option>
-                <option value="student">Student</option>
-            </select>
+        <!-- Login Form -->
+        <div id="loginSection" class="form-section active">
+            <div id="loginError" class="error-message"></div>
+            <div class="form-group">
+                <label class="form-label">Email</label>
+                <input type="email" id="loginEmail" class="form-input" placeholder="your@email.com">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Password</label>
+                <input type="password" id="loginPassword" class="form-input" placeholder="••••••••">
+            </div>
+            <button class="btn btn-primary" onclick="handleLogin()">
+                <i class="ti ti-login"></i> Sign In
+            </button>
+
+            <div class="auth-divider"><span>or</span></div>
+
+            <button class="btn btn-github" onclick="initiateGitHubLogin()">
+                <i class="ti ti-brand-github"></i> Sign in with GitHub
+            </button>
         </div>
 
-        <button class="btn btn-primary" onclick="handleLogin()">
-            <i class="ti ti-login"></i> Sign In
-        </button>
+        <!-- Register Form -->
+        <div id="registerSection" class="form-section">
+            <div id="registerError" class="error-message"></div>
+            <div id="registerSuccess" class="success-message"></div>
+            
+            <div class="form-group">
+                <label class="form-label">Full Name</label>
+                <input type="text" id="registerName" class="form-input" placeholder="Your name">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Email</label>
+                <input type="email" id="registerEmail" class="form-input" placeholder="your@email.com">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Password</label>
+                <input type="password" id="registerPassword" class="form-input" placeholder="••••••••">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Role</label>
+                <select id="registerRole" class="form-input">
+                    <option value="">Select role</option>
+                    <option value="student">Student</option>
+                    <option value="mentor">Faculty/Mentor</option>
+                    <option value="admin">Admin</option>
+                </select>
+            </div>
 
-        <button class="btn btn-github" onclick="handleGitHubOAuth()">
-            <i class="ti ti-brand-github"></i> Sign in with GitHub
-        </button>
+            <button class="btn btn-primary" onclick="handleRegister()">
+                <i class="ti ti-user-plus"></i> Create Account
+            </button>
 
-        <div style="text-align: center; font-size: 11px; color: var(--text3); margin-top: 16px;">
-            Demo: admin / admin123 (Admin)<br>
-            mentor1 / pass123 (Mentor)<br>
-            student1 / pass123 (Student)
+            <div class="auth-divider"><span>Next</span></div>
+
+            <div class="github-connect">
+                <p><strong>Connect GitHub Account</strong></p>
+                <p style="margin-bottom: 0;">After registration, authorize your GitHub profile to enable submissions.</p>
+            </div>
+
+            <button class="btn btn-github" onclick="initiateGitHubOAuth()">
+                <i class="ti ti-brand-github"></i> Authorize with GitHub
+            </button>
         </div>
     </div>
 </div>
 
 <!-- ═══════════════════════════════════════════════════════════════════
-     MAIN APP
-═══════════════════════════════════════════════════════════════════ -->
+     APP
+════════════════════════════════════════════════════════════════════ -->
 <div id="app" class="app" style="display: none;">
     <header class="hdr">
         <div class="logo">
             <i class="ti ti-building-community"></i>
-            Intern<span class="accent">Track</span>
+            Intern<span style="color:var(--accent)">Track</span>
         </div>
+        <div style="font-size: 11px; color: var(--text2);">RVU Cybersecurity</div>
         <div class="hdr-right">
+            <button class="icon-btn" onclick="openModal('githubModal')" title="GitHub Status">
+                <i class="ti ti-brand-github"></i>
+            </button>
             <div class="user-info">
-                <div class="user-avatar" id="userAvatar">A</div>
-                <div style="display: flex; flex-direction: column; gap: 2px; min-width: 0;">
+                <div class="user-avatar" id="userAvatar">U</div>
+                <div style="display: flex; flex-direction: column; gap: 2px;">
                     <div style="font-size: 13px; font-weight: 600;" id="userName">User</div>
-                    <span class="role-badge" id="userRole">Admin</span>
+                    <span style="font-size: 10px; color: var(--text3);" id="userRole">Role</span>
                 </div>
+                <span class="github-status" id="githubStatus" style="display: none;"></span>
             </div>
             <button class="icon-btn" onclick="logout()" title="Logout">
                 <i class="ti ti-logout"></i>
@@ -904,103 +809,66 @@
 
 <!-- Modal Overlay -->
 <div id="modalOverlay" class="modal-overlay">
-    <!-- Add Mentor Modal -->
-    <div id="addMentorModal" class="modal" style="display: none;">
+    <!-- GitHub Modal -->
+    <div id="githubModal" class="modal" style="display: none;">
         <div class="modal-hdr">
-            Add Mentors to Project
-            <button class="modal-close" onclick="closeModal('addMentorModal')"><i class="ti ti-x"></i></button>
+            GitHub Account
+            <button class="modal-close" onclick="closeModal('githubModal')"><i class="ti ti-x"></i></button>
         </div>
-        <div class="modal-body checkbox-group" id="mentorSelectList"></div>
-        <div class="modal-actions">
-            <button class="btn btn-secondary" onclick="closeModal('addMentorModal')">Cancel</button>
-            <button class="btn btn-primary" onclick="saveMentors(event)">Save Mentors</button>
+        <div class="modal-body">
+            <div id="githubContent"></div>
         </div>
     </div>
 
-    <!-- Add Student Modal -->
-    <div id="addStudentModal" class="modal" style="display: none;">
+    <!-- Add Project Modal -->
+    <div id="addProjectModal" class="modal" style="display: none;">
         <div class="modal-hdr">
-            Add Students to Project
-            <button class="modal-close" onclick="closeModal('addStudentModal')"><i class="ti ti-x"></i></button>
-        </div>
-        <div class="modal-body checkbox-group" id="studentSelectList"></div>
-        <div class="modal-actions">
-            <button class="btn btn-secondary" onclick="closeModal('addStudentModal')">Cancel</button>
-            <button class="btn btn-primary" onclick="saveStudents(event)">Save Students</button>
-        </div>
-    </div>
-
-    <!-- Add Task Modal -->
-    <div id="addTaskModal" class="modal" style="display: none;">
-        <div class="modal-hdr">
-            Create Task
-            <button class="modal-close" onclick="closeModal('addTaskModal')"><i class="ti ti-x"></i></button>
+            Add New Project
+            <button class="modal-close" onclick="closeModal('addProjectModal')"><i class="ti ti-x"></i></button>
         </div>
         <div class="modal-body">
             <div class="form-group">
-                <label class="form-label">Task Title *</label>
-                <input type="text" id="taskTitle" class="form-input" placeholder="e.g., Design Phase">
+                <label class="form-label">Project Name *</label>
+                <input type="text" id="projName" class="form-input" placeholder="Project name">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Faculty Guide *</label>
+                <select id="projGuide" class="form-input"></select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">GitHub Repository *</label>
+                <input type="text" id="projRepo" class="form-input" placeholder="repo-name">
             </div>
             <div class="form-group">
                 <label class="form-label">Description</label>
-                <textarea id="taskDescription" class="form-input" rows="3" placeholder="Task description..."></textarea>
-            </div>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
-                <div class="form-group">
-                    <label class="form-label">Start Date *</label>
-                    <input type="date" id="taskStartDate" class="form-input">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">End Date *</label>
-                    <input type="date" id="taskEndDate" class="form-input">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="form-label">Assign to Students</label>
-                <div class="checkbox-group" id="taskStudentSelectList"></div>
+                <textarea id="projDesc" class="form-input" rows="3" placeholder="Project description..."></textarea>
             </div>
         </div>
         <div class="modal-actions">
-            <button class="btn btn-secondary" onclick="closeModal('addTaskModal')">Cancel</button>
-            <button class="btn btn-primary" onclick="saveTask(event)">Create Task</button>
+            <button class="btn btn-secondary btn-sm" onclick="closeModal('addProjectModal')">Cancel</button>
+            <button class="btn btn-primary btn-sm" onclick="saveNewProject()">Create Project</button>
         </div>
     </div>
 
-    <!-- Add Submission Modal -->
-    <div id="addSubmissionModal" class="modal" style="display: none;">
+    <!-- Reassign Students Modal -->
+    <div id="reassignModal" class="modal" style="display: none;">
         <div class="modal-hdr">
-            Record Student Submission
-            <button class="modal-close" onclick="closeModal('addSubmissionModal')"><i class="ti ti-x"></i></button>
+            Reassign Students
+            <button class="modal-close" onclick="closeModal('reassignModal')"><i class="ti ti-x"></i></button>
         </div>
         <div class="modal-body">
             <div class="form-group">
-                <label class="form-label">Student Name *</label>
-                <input type="text" id="submissionStudent" class="form-input" placeholder="Student name">
+                <label class="form-label">Project</label>
+                <select id="reassignProject" class="form-input" onchange="loadProjectStudents()"></select>
             </div>
             <div class="form-group">
-                <label class="form-label">Task Title</label>
-                <input type="text" id="submissionTask" class="form-input" placeholder="Associated task">
-            </div>
-            <div class="form-group">
-                <label class="form-label">Submission Link *</label>
-                <input type="text" id="submissionLink" class="form-input" placeholder="https://drive.google.com/... or GitHub link">
-            </div>
-            <div class="form-group">
-                <label class="form-label">Notes</label>
-                <textarea id="submissionNotes" class="form-input" rows="2" placeholder="Optional notes..."></textarea>
-            </div>
-            <div class="form-group">
-                <label class="form-label">Status</label>
-                <select id="submissionStatus" class="form-input">
-                    <option value="Pending">Pending</option>
-                    <option value="Reviewed">Reviewed</option>
-                    <option value="Approved">Approved</option>
-                </select>
+                <label class="form-label">Students</label>
+                <div id="studentCheckboxes" style="max-height: 300px; overflow-y: auto; background: var(--bg3); border: 1px solid var(--border); border-radius: var(--r-sm); padding: 8px;"></div>
             </div>
         </div>
         <div class="modal-actions">
-            <button class="btn btn-secondary" onclick="closeModal('addSubmissionModal')">Cancel</button>
-            <button class="btn btn-primary" onclick="saveSubmission(event)">Save Submission</button>
+            <button class="btn btn-secondary btn-sm" onclick="closeModal('reassignModal')">Cancel</button>
+            <button class="btn btn-primary btn-sm" onclick="saveReassignment()">Update Assignment</button>
         </div>
     </div>
 </div>
@@ -1012,125 +880,162 @@
     // STATE & DATA
     // ═══════════════════════════════════════════════════════════════════
 
-    const DEMO_USERS = {
-        admin: { username: 'admin', password: 'admin123', role: 'admin', name: 'Administrator' },
-        mentor1: { username: 'mentor1', password: 'pass123', role: 'mentor', name: 'Dr. Ramesh Kumar', projects: [1, 2, 3] },
-        mentor2: { username: 'mentor2', password: 'pass123', role: 'mentor', name: 'Dr. Saliha Bathool', projects: [4, 5] },
-        student1: { username: 'student1', password: 'pass123', role: 'student', name: 'Mukhil Kumaran S', projects: [1] },
-        student2: { username: 'student2', password: 'pass123', role: 'student', name: 'Samip Singh', projects: [1] },
-        student3: { username: 'student3', password: 'pass123', role: 'student', name: 'KISHAN GUPTA', projects: [2] }
-    };
-
-    const PROJECTS_DATA = [
-        {
-            id: 1,
-            name: '802.1X Port-Based Authentication with RADIUS on Wired & Wireless',
-            guide: 'Sheba Pari N',
-            category: 'Network Security',
-            students: 3,
-            description: 'Implementing port-based authentication using RADIUS protocol'
-        },
-        {
-            id: 2,
-            name: 'Q-Learning Based Intrusion-Resilient Routing Protocol for IoT',
-            guide: 'Dr. Ishita Chakraborty',
-            category: 'IoT Security',
-            students: 3,
-            description: 'AI-based routing protocols for secure IoT communication'
-        },
-        {
-            id: 3,
-            name: 'Distributed Ledger Technology for Secure Data Management',
-            guide: 'Dr. Saliha Bathool',
-            category: 'Blockchain',
-            students: 20,
-            description: 'Blockchain-based solutions for secure data storage'
-        },
-        {
-            id: 4,
-            name: 'Machine Learning-based Malware Detection System',
-            guide: 'Evlin Vidyu Latha P',
-            category: 'ML Security',
-            students: 17,
-            description: 'ML algorithms for malware classification'
-        },
-        {
-            id: 5,
-            name: 'Hybrid Cryptography Framework for Quantum-Safe Communication',
-            guide: 'Sunilkumar J',
-            category: 'Cryptography',
-            students: 7,
-            description: 'Post-quantum cryptography implementations'
-        }
+    const REAL_PROJECTS = [
+        { id: 1, name: '802.1X Port-Based Authentication with RADIUS on Wired & Wireless', guide: 'Dr. Manish Kumar', students: 3, repo: 'rvu-proj-802-1x' },
+        { id: 2, name: 'Q-Learning Based Intrusion-Resilient Routing Protocol for IoT', guide: 'Sunilkumar J', students: 3, repo: 'rvu-proj-iot-routing' },
+        { id: 3, name: 'AI-Based Cyber Crime Prediction System', guide: 'Evlin Vidyu Latha P', students: 20, repo: 'rvu-proj-crime-pred' },
+        { id: 4, name: 'AI-Based Network Traffic Anomaly Detection', guide: 'Dr.Sarasvathi V', students: 17, repo: 'rvu-proj-anomaly' },
+        { id: 5, name: 'AI-Driven Adaptive Intrusion Detection Framework', guide: 'Dr. Manish Kumar', students: 7, repo: 'rvu-proj-ids' }
     ];
 
-    const MENTORS = ['Sheba Pari N', 'Dr. Ishita Chakraborty', 'Dr. Saliha Bathool', 'Evlin Vidyu Latha P', 'Sunilkumar J'];
+    const REAL_FACULTY = [
+        { id: 1, name: 'Dr. Manish Kumar', email: 'manish@rvu.edu', github: 'manish-rvu' },
+        { id: 2, name: 'Sunilkumar J', email: 'sunil@rvu.edu', github: 'sunil-rvu' },
+        { id: 3, name: 'Evlin Vidyu Latha P', email: 'evlin@rvu.edu', github: 'evlin-rvu' },
+        { id: 4, name: 'Dr.Sarasvathi V', email: 'sara@rvu.edu', github: 'sara-rvu' }
+    ];
+
+    const DEMO_USERS = {
+        'admin@rvu.edu': { name: 'Admin User', password: 'admin123', role: 'admin', github: null },
+        'mentor@rvu.edu': { name: 'Dr. Manish Kumar', password: 'pass123', role: 'mentor', github: 'manish-rvu', projects: [1, 2, 3] },
+        'student@rvu.edu': { name: 'Student User', password: 'pass123', role: 'student', github: null, projects: [1] }
+    };
 
     let currentUser = null;
-    let currentProject = null;
-    let projects = [];
-    let projectMentors = {};
+    let projects = JSON.parse(JSON.stringify(REAL_PROJECTS));
+    let faculty = JSON.parse(JSON.stringify(REAL_FACULTY));
+    let users = {};
     let projectStudents = {};
-    let projectTasks = {};
-    let projectSubmissions = {};
+    let githubAuthorized = false;
 
     // ═══════════════════════════════════════════════════════════════════
-    // AUTHENTICATION
+    // AUTH FUNCTIONS
     // ═══════════════════════════════════════════════════════════════════
 
-    function handleLogin() {
-        const username = document.getElementById('loginUsername').value.trim().toLowerCase();
-        const password = document.getElementById('loginPassword').value;
-        const role = document.getElementById('loginRole').value;
-
-        if (!username || !password || !role) {
-            showLoginError('Please fill all fields');
-            return;
-        }
-
-        const user = Object.values(DEMO_USERS).find(u => u.username === username && u.password === password && u.role === role);
-
-        if (!user) {
-            showLoginError('Invalid credentials or role mismatch');
-            return;
-        }
-
-        loginUser(user);
+    function switchAuthTab(tab) {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.form-section').forEach(s => s.classList.remove('active'));
+        
+        event.target.classList.add('active');
+        document.getElementById(tab + 'Section').classList.add('active');
     }
 
-    function handleGitHubOAuth() {
-        // Simulate GitHub OAuth
-        const user = { username: 'github-user', role: 'student', name: 'GitHub User', projects: [1, 2] };
-        loginUser(user);
+    function handleLogin() {
+        const email = document.getElementById('loginEmail').value.trim();
+        const password = document.getElementById('loginPassword').value;
+
+        if (!email || !password) {
+            showAuthError('loginError', 'Please fill all fields');
+            return;
+        }
+
+        // Check demo users first
+        if (DEMO_USERS[email] && DEMO_USERS[email].password === password) {
+            const user = { email, ...DEMO_USERS[email] };
+            loginUser(user);
+            return;
+        }
+
+        // Check registered users
+        if (users[email] && users[email].password === password) {
+            const user = { email, ...users[email] };
+            loginUser(user);
+            return;
+        }
+
+        showAuthError('loginError', 'Invalid email or password');
+    }
+
+    function handleRegister() {
+        const name = document.getElementById('registerName').value.trim();
+        const email = document.getElementById('registerEmail').value.trim();
+        const password = document.getElementById('registerPassword').value;
+        const role = document.getElementById('registerRole').value;
+
+        if (!name || !email || !password || !role) {
+            showAuthError('registerError', 'Please fill all fields');
+            return;
+        }
+
+        if (users[email] || DEMO_USERS[email]) {
+            showAuthError('registerError', 'Email already registered');
+            return;
+        }
+
+        // Register user
+        users[email] = { name, password, role, github: null, projects: [] };
+        localStorage.setItem('users', JSON.stringify(users));
+
+        document.getElementById('registerSuccess').textContent = '✓ Registration successful! Now authorize your GitHub account.';
+        document.getElementById('registerSuccess').style.display = 'block';
+
+        setTimeout(() => {
+            initiateGitHubOAuth();
+        }, 2000);
+    }
+
+    function initiateGitHubLogin() {
+        const email = document.getElementById('loginEmail').value.trim();
+        if (!email) {
+            showAuthError('loginError', 'Enter email first');
+            return;
+        }
+        initiateGitHubOAuth(email);
+    }
+
+    function initiateGitHubOAuth(email = null) {
+        // Simulate GitHub OAuth flow
+        const githubUsername = prompt('Enter your GitHub username:');
+        if (!githubUsername) return;
+
+        if (email) {
+            // Login with GitHub
+            if (users[email]) {
+                users[email].github = githubUsername;
+                loginUser({ email, ...users[email] });
+            }
+        } else {
+            // Register and connect GitHub
+            const email = document.getElementById('registerEmail').value.trim();
+            if (users[email]) {
+                users[email].github = githubUsername;
+                localStorage.setItem('users', JSON.stringify(users));
+                showToast(`GitHub account connected: ${githubUsername}`, 'success');
+            }
+        }
     }
 
     function loginUser(user) {
         currentUser = user;
-        sessionStorage.setItem('user', JSON.stringify(user));
+        sessionStorage.setItem('currentUser', JSON.stringify(user));
+        
+        // Check GitHub status
+        githubAuthorized = !!user.github;
+        
         launchApp();
     }
 
     function logout() {
-        if (confirm('Are you sure you want to logout?')) {
+        if (confirm('Logout?')) {
             currentUser = null;
-            sessionStorage.removeItem('user');
+            sessionStorage.removeItem('currentUser');
             location.reload();
         }
     }
 
-    function showLoginError(msg) {
-        const el = document.getElementById('loginError');
+    function showAuthError(id, msg) {
+        const el = document.getElementById(id);
         el.textContent = msg;
         el.style.display = 'block';
         setTimeout(() => el.style.display = 'none', 4000);
     }
 
     // ═══════════════════════════════════════════════════════════════════
-    // APP INITIALIZATION
+    // APP
     // ═══════════════════════════════════════════════════════════════════
 
     function launchApp() {
-        document.getElementById('loginScreen').style.display = 'none';
+        document.getElementById('authScreen').style.display = 'none';
         document.getElementById('app').style.display = 'flex';
 
         // Load data
@@ -1143,20 +1048,33 @@
     }
 
     function setupUI() {
-        const avatar = currentUser.username.charAt(0).toUpperCase();
+        const avatar = currentUser.name.charAt(0).toUpperCase();
         document.getElementById('userAvatar').textContent = avatar;
-        document.getElementById('userName').textContent = currentUser.name || currentUser.username;
+        document.getElementById('userName').textContent = currentUser.name;
         document.getElementById('userRole').textContent = currentUser.role.toUpperCase();
+        
+        if (githubAuthorized) {
+            document.getElementById('githubStatus').style.display = 'inline-block';
+        }
+
+        // Populate faculty select
+        const selects = document.querySelectorAll('#projGuide');
+        selects.forEach(sel => {
+            sel.innerHTML = faculty.map(f => `<option value="${f.name}">${f.name}</option>`).join('');
+        });
     }
 
     function buildNavigation() {
         const nav = document.getElementById('sidebar');
-        const items = [
-            { icon: 'ti-layout-dashboard', text: 'Dashboard', fn: 'showDashboard' },
-            { icon: 'ti-folder', text: 'Projects', fn: 'showProjects' },
-            { icon: 'ti-checklist', text: 'Tasks', fn: 'showTasks' },
-            { icon: 'ti-file-upload', text: 'Submissions', fn: 'showSubmissions' }
-        ];
+        const items = [];
+
+        items.push({ icon: 'ti-layout-dashboard', text: 'Dashboard', fn: 'showDashboard' });
+        items.push({ icon: 'ti-folder', text: 'Projects', fn: 'showProjects' });
+        
+        if (currentUser.role === 'admin') {
+            items.push({ icon: 'ti-user-plus', text: 'Add Project', fn: 'openAddProjectModal' });
+            items.push({ icon: 'ti-users', text: 'Reassign Students', fn: 'openReassignModal' });
+        }
 
         nav.innerHTML = items.map(item => `
             <button class="nav-item" onclick="${item.fn}()">
@@ -1166,58 +1084,50 @@
         `).join('');
     }
 
-    // ═══════════════════════════════════════════════════════════════════
-    // PAGE RENDERING
-    // ═══════════════════════════════════════════════════════════════════
-
-    function showPage(content) {
-        document.getElementById('mainContent').innerHTML = content;
-    }
-
     function showDashboard() {
         updateNav('showDashboard');
         const accessibleProjects = getAccessibleProjects();
-        
+
         const html = `
             <div class="page-hdr">
                 <div>
                     <h1 class="page-title">Dashboard</h1>
-                    <p class="page-sub">Welcome, ${currentUser.name || currentUser.username}</p>
+                    <p class="page-sub">Welcome, ${currentUser.name}</p>
                 </div>
             </div>
 
             <div class="projects-grid">
                 <div class="card">
-                    <div class="card-title"><i class="ti ti-folder"></i>Accessible Projects</div>
-                    <div style="font-size: 32px; font-weight: 700; color: var(--accent); margin: 10px 0;">${accessibleProjects.length}</div>
-                    <div style="font-size: 13px; color: var(--text2);">Based on your role</div>
+                    <div style="font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;">Accessible Projects</div>
+                    <div style="font-size: 28px; font-weight: 700; color: var(--accent); margin-bottom: 4px;">${accessibleProjects.length}</div>
+                    <div style="font-size: 12px; color: var(--text2);">Based on your role</div>
                 </div>
                 <div class="card">
-                    <div class="card-title"><i class="ti ti-checklist"></i>Total Tasks</div>
-                    <div style="font-size: 32px; font-weight: 700; color: var(--blue); margin: 10px 0;">${Object.values(projectTasks).reduce((sum, t) => sum + (t?.length || 0), 0)}</div>
-                    <div style="font-size: 13px; color: var(--text2);">Across projects</div>
+                    <div style="font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;">GitHub Status</div>
+                    <div style="font-size: 28px; font-weight: 700; color: var(--blue); margin-bottom: 4px;">${githubAuthorized ? '✓ Connected' : '✗ Not Connected'}</div>
+                    <div style="font-size: 12px; color: var(--text2);">RVU Cybersecurity</div>
                 </div>
                 <div class="card">
-                    <div class="card-title"><i class="ti ti-file-upload"></i>Submissions</div>
-                    <div style="font-size: 32px; font-weight: 700; color: var(--amber); margin: 10px 0;">${Object.values(projectSubmissions).reduce((sum, s) => sum + (s?.length || 0), 0)}</div>
-                    <div style="font-size: 13px; color: var(--text2);">Total submissions</div>
+                    <div style="font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;">Total Students</div>
+                    <div style="font-size: 28px; font-weight: 700; color: var(--amber); margin-bottom: 4px;">${Object.values(projectStudents).reduce((sum, arr) => sum + arr.length, 0)}</div>
+                    <div style="font-size: 12px; color: var(--text2);">Across all projects</div>
                 </div>
             </div>
 
             <div class="card">
-                <div class="card-title"><i class="ti ti-folder"></i>Your Projects</div>
+                <div style="font-size: 13px; font-weight: 600; margin-bottom: 14px;">Your Projects</div>
                 ${accessibleProjects.length > 0 
                     ? accessibleProjects.map(p => `
-                        <div style="padding: 12px 0; border-bottom: 1px solid var(--border); cursor: pointer;" onclick="viewProjectDetail(${p.id})">
-                            <div style="font-weight: 500; margin-bottom: 4px;">${p.name.slice(0, 60)}...</div>
-                            <div style="font-size: 12px; color: var(--text2);">Guide: ${p.guide}</div>
+                        <div style="padding: 10px 0; border-bottom: 1px solid var(--border);">
+                            <div style="font-weight: 500; margin-bottom: 3px;">${p.name.slice(0,60)}...</div>
+                            <div style="font-size: 12px; color: var(--text2);">Guide: ${p.guide} | Students: ${projectStudents[p.id]?.length || 0}</div>
                         </div>
                     `).join('')
-                    : '<div style="color: var(--text3); padding: 12px;">No accessible projects for your role</div>'}
+                    : '<div style="color: var(--text3); padding: 10px;">No accessible projects</div>'}
             </div>
         `;
 
-        showPage(html);
+        updateMainContent(html);
     }
 
     function showProjects() {
@@ -1228,461 +1138,49 @@
             <div class="page-hdr">
                 <div>
                     <h1 class="page-title">Projects</h1>
-                    <p class="page-sub">${accessibleProjects.length} accessible projects</p>
+                    <p class="page-sub">${accessibleProjects.length} projects</p>
                 </div>
+                ${currentUser.role === 'admin' ? `<button class="btn btn-primary" onclick="openModal('addProjectModal')" style="width: auto;"><i class="ti ti-plus"></i> Add Project</button>` : ''}
             </div>
 
             <div class="projects-grid">
                 ${accessibleProjects.map(p => `
-                    <div class="project-card" onclick="viewProjectDetail(${p.id})">
+                    <div class="project-card">
                         <div class="project-name">${p.name}</div>
-                        <div class="project-info">
-                            <strong>Guide:</strong> ${p.guide}<br>
-                            <strong>Category:</strong> ${p.category}<br>
-                            <strong>Students:</strong> ${p.students}
-                        </div>
+                        <div class="project-guide">Guide: <strong>${p.guide}</strong></div>
                         <div class="project-stats">
-                            <div class="stat-item">
-                                <div class="stat-value">${(projectMentors[p.id] || []).length}</div>
-                                <div class="stat-label">Mentors</div>
+                            <div>
+                                <div class="stat-value">${projectStudents[p.id]?.length || 0}</div>
+                                <div class="stat-label">Students</div>
                             </div>
-                            <div class="stat-item">
-                                <div class="stat-value">${(projectTasks[p.id] || []).length}</div>
-                                <div class="stat-label">Tasks</div>
+                            <div>
+                                <div class="stat-value">${p.students}</div>
+                                <div class="stat-label">Max</div>
                             </div>
                         </div>
-                        <div class="project-actions">
-                            <button class="btn btn-primary btn-sm" onclick="viewProjectDetail(${p.id})">View Details</button>
+                        <div style="font-size: 12px; color: var(--text2); margin-bottom: 12px;">
+                            <strong>GitHub:</strong> rvu-cybersec/${p.repo}
+                        </div>
+                        <span class="badge">Active</span>
+                        <div class="button-group">
+                            <button class="btn btn-secondary btn-sm" onclick="viewProject(${p.id})">View</button>
+                            ${currentUser.role === 'admin' ? `<button class="btn btn-secondary btn-sm" onclick="editProject(${p.id})">Edit</button>` : ''}
                         </div>
                     </div>
                 `).join('')}
             </div>
         `;
 
-        showPage(html);
-    }
-
-    function viewProjectDetail(projectId) {
-        if (!canAccessProject(projectId)) {
-            showToast('You do not have access to this project', 'error');
-            return;
-        }
-
-        currentProject = projects.find(p => p.id === projectId);
-        const tasks = projectTasks[projectId] || [];
-        const mentors = projectMentors[projectId] || [];
-        const students = projectStudents[projectId] || [];
-        const submissions = projectSubmissions[projectId] || [];
-
-        const html = `
-            <div class="detail-container active">
-                <div class="detail-header">
-                    <div>
-                        <button class="btn btn-secondary btn-sm" onclick="showProjects()" style="margin-bottom: 8px;"><i class="ti ti-arrow-left"></i> Back</button>
-                        <h1 class="detail-title">${currentProject.name}</h1>
-                        <p class="detail-guide">Guide: ${currentProject.guide}</p>
-                    </div>
-                </div>
-
-                <!-- Mentors Section -->
-                <div class="detail-section">
-                    <div class="section-title">
-                        Mentors (${mentors.length})
-                        ${canManageProject(currentProject.id) ? `<button class="btn-add" onclick="openAddMentorModal(${currentProject.id})"><i class="ti ti-plus"></i> Add Mentor</button>` : ''}
-                    </div>
-                    <div class="tags-list">
-                        ${mentors.length > 0 
-                            ? mentors.map(m => `
-                                <div class="tag">
-                                    ${m}
-                                    ${canManageProject(currentProject.id) ? `<span class="tag-remove" onclick="removeMentor(${currentProject.id}, '${m}')">×</span>` : ''}
-                                </div>
-                            `).join('')
-                            : '<div class="empty-state"><div style="font-size: 12px;">No mentors assigned</div></div>'}
-                    </div>
-                </div>
-
-                <!-- Students Section -->
-                <div class="detail-section">
-                    <div class="section-title">
-                        Students (${students.length})
-                        ${canManageProject(currentProject.id) ? `<button class="btn-add" onclick="openAddStudentModal()"><i class="ti ti-plus"></i> Add Student</button>` : ''}
-                    </div>
-                    <div class="tags-list">
-                        ${students.length > 0 
-                            ? students.map((s, i) => `
-                                <div class="tag">
-                                    ${s}
-                                    ${canManageProject(currentProject.id) ? `<span class="tag-remove" onclick="removeStudent(${currentProject.id}, ${i})">×</span>` : ''}
-                                </div>
-                            `).join('')
-                            : '<div class="empty-state"><div style="font-size: 12px;">No students assigned</div></div>'}
-                    </div>
-                </div>
-
-                <!-- Tasks Section -->
-                <div class="detail-section">
-                    <div class="section-title">
-                        Tasks (${tasks.length})
-                        ${canManageProject(currentProject.id) ? `<button class="btn-add" onclick="openAddTaskModal()"><i class="ti ti-plus"></i> Create Task</button>` : ''}
-                    </div>
-                    ${tasks.length > 0
-                        ? tasks.map((t, i) => `
-                            <div class="task-item">
-                                <div class="task-content">
-                                    <div class="task-title">${t.title}</div>
-                                    <div class="task-dates">📅 ${t.startDate} → ${t.endDate}</div>
-                                    ${t.description ? `<div class="task-desc">${t.description}</div>` : ''}
-                                </div>
-                                ${canManageProject(currentProject.id) ? `<button class="btn btn-sm btn-danger" onclick="removeTask(${currentProject.id}, ${i})">Delete</button>` : ''}
-                            </div>
-                        `).join('')
-                        : '<div class="empty-state"><div style="font-size: 12px;">No tasks created</div></div>'}
-                </div>
-
-                <!-- Submissions Section -->
-                <div class="detail-section">
-                    <div class="section-title">
-                        Submissions (${submissions.length})
-                        ${canManageProject(currentProject.id) ? `<button class="btn-add" onclick="openAddSubmissionModal()"><i class="ti ti-plus"></i> Record Submission</button>` : ''}
-                    </div>
-                    ${submissions.length > 0
-                        ? submissions.map((s, i) => `
-                            <div class="submission-item">
-                                <div class="submission-header">
-                                    <div>
-                                        <div class="submission-student">${s.student}</div>
-                                        <div class="submission-task">Task: ${s.taskTitle || 'General'}</div>
-                                    </div>
-                                    <span class="submission-status status-${s.status.toLowerCase()}">${s.status}</span>
-                                </div>
-                                <a href="${s.link}" target="_blank" class="submission-link">🔗 Open Submission</a>
-                                ${s.notes ? `<div style="font-size: 12px; color: var(--text2); margin-top: 8px;">Notes: ${s.notes}</div>` : ''}
-                                ${canManageProject(currentProject.id) ? `<button class="btn btn-sm btn-danger" onclick="removeSubmission(${currentProject.id}, ${i})" style="margin-top: 10px;">Delete</button>` : ''}
-                            </div>
-                        `).join('')
-                        : '<div class="empty-state"><div style="font-size: 12px;">No submissions recorded</div></div>'}
-                </div>
-            </div>
-        `;
-
-        showPage(html);
-    }
-
-    function showTasks() {
-        updateNav('showTasks');
-        const accessibleProjects = getAccessibleProjects();
-        let allTasks = [];
-
-        accessibleProjects.forEach(p => {
-            (projectTasks[p.id] || []).forEach((t, i) => {
-                allTasks.push({ ...t, projectId: p.id, taskIndex: i, projectName: p.name });
-            });
-        });
-
-        const html = `
-            <div class="page-hdr">
-                <div>
-                    <h1 class="page-title">Tasks</h1>
-                    <p class="page-sub">${allTasks.length} total tasks</p>
-                </div>
-            </div>
-
-            ${allTasks.length > 0
-                ? allTasks.map(t => `
-                    <div class="card">
-                        <div style="display: flex; justify-content: space-between; align-items: start;">
-                            <div>
-                                <div style="font-weight: 600; font-size: 14px; margin-bottom: 4px;">${t.title}</div>
-                                <div style="font-size: 12px; color: var(--text2); margin-bottom: 8px;">Project: ${t.projectName.slice(0, 50)}...</div>
-                                <div style="font-size: 11px; color: var(--text3);">📅 ${t.startDate} → ${t.endDate}</div>
-                                ${t.description ? `<div style="font-size: 12px; color: var(--text2); margin-top: 6px;">${t.description}</div>` : ''}
-                            </div>
-                        </div>
-                    </div>
-                `).join('')
-                : '<div class="empty-state"><div class="empty-icon">📭</div>No tasks assigned</div>'}
-        `;
-
-        showPage(html);
-    }
-
-    function showSubmissions() {
-        updateNav('showSubmissions');
-        const accessibleProjects = getAccessibleProjects();
-        let allSubmissions = [];
-
-        accessibleProjects.forEach(p => {
-            (projectSubmissions[p.id] || []).forEach((s, i) => {
-                allSubmissions.push({ ...s, projectId: p.id, submissionIndex: i, projectName: p.name });
-            });
-        });
-
-        const html = `
-            <div class="page-hdr">
-                <div>
-                    <h1 class="page-title">Submissions</h1>
-                    <p class="page-sub">${allSubmissions.length} total submissions</p>
-                </div>
-                ${canManageAnyProject() ? `<button class="btn btn-primary" onclick="openAddSubmissionModal()"><i class="ti ti-plus"></i> Record Submission</button>` : ''}
-            </div>
-
-            ${allSubmissions.length > 0
-                ? allSubmissions.map(s => `
-                    <div class="card">
-                        <div class="submission-header">
-                            <div>
-                                <div class="submission-student">${s.student}</div>
-                                <div class="submission-task">Task: ${s.taskTitle || 'General'} | Project: ${s.projectName.slice(0, 40)}...</div>
-                            </div>
-                            <span class="submission-status status-${s.status.toLowerCase()}">${s.status}</span>
-                        </div>
-                        <a href="${s.link}" target="_blank" class="submission-link">🔗 Open Submission</a>
-                        ${s.notes ? `<div style="font-size: 12px; color: var(--text2); margin-top: 8px;">Notes: ${s.notes}</div>` : ''}
-                    </div>
-                `).join('')
-                : '<div class="empty-state"><div class="empty-icon">📭</div>No submissions yet</div>'}
-        `;
-
-        showPage(html);
+        updateMainContent(html);
     }
 
     // ═══════════════════════════════════════════════════════════════════
-    // ACCESS CONTROL
+    // UTILITY FUNCTIONS
     // ═══════════════════════════════════════════════════════════════════
 
     function getAccessibleProjects() {
-        if (currentUser.role === 'admin') {
-            return projects;
-        }
-        return projects.filter(p => currentUser.projects && currentUser.projects.includes(p.id));
-    }
-
-    function canAccessProject(projectId) {
-        if (currentUser.role === 'admin') return true;
-        return currentUser.projects && currentUser.projects.includes(projectId);
-    }
-
-    function canManageProject(projectId) {
-        if (currentUser.role === 'admin') return true;
-        if (currentUser.role === 'mentor') {
-            const project = projects.find(p => p.id === projectId);
-            return project && currentUser.projects && currentUser.projects.includes(projectId);
-        }
-        return false;
-    }
-
-    function canManageAnyProject() {
-        return currentUser.role === 'admin' || currentUser.role === 'mentor';
-    }
-
-    // ═══════════════════════════════════════════════════════════════════
-    // MODAL FUNCTIONS
-    // ═══════════════════════════════════════════════════════════════════
-
-    function openModal(modalId) {
-        document.getElementById('modalOverlay').classList.add('open');
-        document.getElementById(modalId).style.display = 'block';
-    }
-
-    function closeModal(modalId) {
-        document.getElementById('modalOverlay').classList.remove('open');
-        document.getElementById(modalId).style.display = 'none';
-    }
-
-    function openAddMentorModal(projectId = null) {
-        if (projectId) currentProject = projects.find(p => p.id === projectId);
-        
-        const mentorSelectList = document.getElementById('mentorSelectList');
-        mentorSelectList.innerHTML = MENTORS.map(m => `
-            <label>
-                <input type="checkbox" value="${m}" ${(projectMentors[currentProject.id] || []).includes(m) ? 'checked' : ''}>
-                ${m}
-            </label>
-        `).join('');
-        
-        openModal('addMentorModal');
-    }
-
-    function openAddStudentModal() {
-        const studentSelectList = document.getElementById('studentSelectList');
-        const allStudents = Object.values(DEMO_USERS).filter(u => u.role === 'student').map(u => u.name);
-        
-        studentSelectList.innerHTML = allStudents.map(s => `
-            <label>
-                <input type="checkbox" value="${s}" ${(projectStudents[currentProject.id] || []).includes(s) ? 'checked' : ''}>
-                ${s}
-            </label>
-        `).join('');
-        
-        openModal('addStudentModal');
-    }
-
-    function openAddTaskModal() {
-        document.getElementById('taskTitle').value = '';
-        document.getElementById('taskDescription').value = '';
-        document.getElementById('taskStartDate').value = '';
-        document.getElementById('taskEndDate').value = '';
-        
-        const taskStudentSelectList = document.getElementById('taskStudentSelectList');
-        const students = projectStudents[currentProject.id] || [];
-        taskStudentSelectList.innerHTML = students.map(s => `
-            <label>
-                <input type="checkbox" value="${s}">
-                ${s}
-            </label>
-        `).join('');
-        
-        openModal('addTaskModal');
-    }
-
-    function openAddSubmissionModal() {
-        document.getElementById('submissionStudent').value = '';
-        document.getElementById('submissionTask').value = '';
-        document.getElementById('submissionLink').value = '';
-        document.getElementById('submissionNotes').value = '';
-        document.getElementById('submissionStatus').value = 'Pending';
-        
-        openModal('addSubmissionModal');
-    }
-
-    function saveMentors(event) {
-        event.preventDefault();
-        const selected = Array.from(document.querySelectorAll('#mentorSelectList input[type="checkbox"]:checked'))
-            .map(cb => cb.value);
-        
-        if (selected.length === 0) {
-            showToast('Select at least one mentor', 'error');
-            return;
-        }
-        
-        projectMentors[currentProject.id] = selected;
-        saveStorage();
-        closeModal('addMentorModal');
-        viewProjectDetail(currentProject.id);
-        showToast('Mentors updated successfully', 'success');
-    }
-
-    function saveStudents(event) {
-        event.preventDefault();
-        const selected = Array.from(document.querySelectorAll('#studentSelectList input[type="checkbox"]:checked'))
-            .map(cb => cb.value);
-        
-        projectStudents[currentProject.id] = selected;
-        saveStorage();
-        closeModal('addStudentModal');
-        viewProjectDetail(currentProject.id);
-        showToast('Students updated successfully', 'success');
-    }
-
-    function saveTask(event) {
-        event.preventDefault();
-        const title = document.getElementById('taskTitle').value.trim();
-        const description = document.getElementById('taskDescription').value.trim();
-        const startDate = document.getElementById('taskStartDate').value;
-        const endDate = document.getElementById('taskEndDate').value;
-        
-        if (!title || !startDate || !endDate) {
-            showToast('Fill all required fields', 'error');
-            return;
-        }
-        
-        if (!projectTasks[currentProject.id]) projectTasks[currentProject.id] = [];
-        projectTasks[currentProject.id].push({ title, description, startDate, endDate });
-        
-        saveStorage();
-        closeModal('addTaskModal');
-        viewProjectDetail(currentProject.id);
-        showTasks();
-        showToast('Task created successfully', 'success');
-    }
-
-    function saveSubmission(event) {
-        event.preventDefault();
-        const student = document.getElementById('submissionStudent').value.trim();
-        const taskTitle = document.getElementById('submissionTask').value.trim();
-        const link = document.getElementById('submissionLink').value.trim();
-        const notes = document.getElementById('submissionNotes').value.trim();
-        const status = document.getElementById('submissionStatus').value;
-        
-        if (!student || !link) {
-            showToast('Student name and submission link are required', 'error');
-            return;
-        }
-        
-        if (!projectSubmissions[currentProject.id]) projectSubmissions[currentProject.id] = [];
-        projectSubmissions[currentProject.id].push({ student, taskTitle, link, notes, status });
-        
-        saveStorage();
-        closeModal('addSubmissionModal');
-        viewProjectDetail(currentProject.id);
-        showSubmissions();
-        showToast('Submission recorded successfully', 'success');
-    }
-
-    function removeMentor(projectId, mentor) {
-        if (confirm(`Remove ${mentor} as mentor?`)) {
-            projectMentors[projectId] = projectMentors[projectId].filter(m => m !== mentor);
-            saveStorage();
-            viewProjectDetail(projectId);
-            showToast('Mentor removed', 'success');
-        }
-    }
-
-    function removeStudent(projectId, index) {
-        if (confirm('Remove this student?')) {
-            projectStudents[projectId].splice(index, 1);
-            saveStorage();
-            viewProjectDetail(projectId);
-            showToast('Student removed', 'success');
-        }
-    }
-
-    function removeTask(projectId, index) {
-        if (confirm('Delete this task?')) {
-            projectTasks[projectId].splice(index, 1);
-            saveStorage();
-            viewProjectDetail(projectId);
-            showTasks();
-            showToast('Task deleted', 'success');
-        }
-    }
-
-    function removeSubmission(projectId, index) {
-        if (confirm('Remove this submission?')) {
-            projectSubmissions[projectId].splice(index, 1);
-            saveStorage();
-            viewProjectDetail(projectId);
-            showSubmissions();
-            showToast('Submission removed', 'success');
-        }
-    }
-
-    // ═══════════════════════════════════════════════════════════════════
-    // STORAGE & UTILITIES
-    // ═══════════════════════════════════════════════════════════════════
-
-    function loadStorage() {
-        projects = JSON.parse(JSON.stringify(PROJECTS_DATA));
-        
-        const stored = localStorage.getItem('projectData');
-        if (stored) {
-            const data = JSON.parse(stored);
-            projectMentors = data.mentors || {};
-            projectStudents = data.students || {};
-            projectTasks = data.tasks || {};
-            projectSubmissions = data.submissions || {};
-        }
-    }
-
-    function saveStorage() {
-        const data = {
-            mentors: projectMentors,
-            students: projectStudents,
-            tasks: projectTasks,
-            submissions: projectSubmissions
-        };
-        localStorage.setItem('projectData', JSON.stringify(data));
+        if (currentUser.role === 'admin') return projects;
+        return projects.filter(p => currentUser.projects?.includes(p.id));
     }
 
     function updateNav(fn) {
@@ -1690,11 +1188,141 @@
         document.querySelector(`[onclick="${fn}()"]`)?.classList.add('active');
     }
 
+    function updateMainContent(html) {
+        document.getElementById('mainContent').innerHTML = `<div class="page active">${html}</div>`;
+    }
+
+    function openModal(id) {
+        document.getElementById('modalOverlay').classList.add('open');
+        document.getElementById(id).style.display = 'block';
+
+        if (id === 'reassignModal') {
+            document.getElementById('reassignProject').innerHTML = projects.map(p => 
+                `<option value="${p.id}">${p.name}</option>`
+            ).join('');
+        }
+    }
+
+    function closeModal(id) {
+        document.getElementById('modalOverlay').classList.remove('open');
+        document.getElementById(id).style.display = 'none';
+    }
+
+    function openAddProjectModal() {
+        if (currentUser.role !== 'admin') {
+            showToast('Admin access required', 'error');
+            return;
+        }
+        openModal('addProjectModal');
+    }
+
+    function saveNewProject() {
+        const name = document.getElementById('projName').value.trim();
+        const guide = document.getElementById('projGuide').value;
+        const repo = document.getElementById('projRepo').value.trim();
+        const desc = document.getElementById('projDesc').value.trim();
+
+        if (!name || !guide || !repo) {
+            showToast('Fill all required fields', 'error');
+            return;
+        }
+
+        const newProject = {
+            id: Math.max(...projects.map(p => p.id)) + 1,
+            name,
+            guide,
+            students: 0,
+            repo,
+            description: desc
+        };
+
+        projects.push(newProject);
+        projectStudents[newProject.id] = [];
+        saveStorage();
+
+        showToast('Project created successfully', 'success');
+        closeModal('addProjectModal');
+        showProjects();
+    }
+
+    function openReassignModal() {
+        if (currentUser.role !== 'admin') {
+            showToast('Admin access required', 'error');
+            return;
+        }
+        openModal('reassignModal');
+    }
+
+    function loadProjectStudents() {
+        const projId = parseInt(document.getElementById('reassignProject').value);
+        const students = projectStudents[projId] || [];
+
+        const checkboxes = [
+            { id: 1, name: 'Mukhil Kumaran S', email: 'mukhil@college.edu' },
+            { id: 2, name: 'Samip Singh', email: 'samip@college.edu' },
+            { id: 3, name: 'KISHAN GUPTA', email: 'kishan@college.edu' },
+            { id: 4, name: 'Student 4', email: 'student4@college.edu' },
+            { id: 5, name: 'Student 5', email: 'student5@college.edu' }
+        ];
+
+        document.getElementById('studentCheckboxes').innerHTML = checkboxes.map(s => `
+            <label style="display: flex; align-items: center; gap: 8px; padding: 8px; cursor: pointer;">
+                <input type="checkbox" value="${s.id}" ${students.includes(s.id) ? 'checked' : ''}>
+                ${s.name}
+            </label>
+        `).join('');
+    }
+
+    function saveReassignment() {
+        const projId = parseInt(document.getElementById('reassignProject').value);
+        const selected = Array.from(document.querySelectorAll('#studentCheckboxes input:checked'))
+            .map(cb => parseInt(cb.value));
+
+        projectStudents[projId] = selected;
+        saveStorage();
+
+        showToast('Students reassigned successfully', 'success');
+        closeModal('reassignModal');
+        showProjects();
+    }
+
+    function viewProject(id) {
+        const project = projects.find(p => p.id === id);
+        alert(`Project: ${project.name}\nGuide: ${project.guide}\nRepo: rvu-cybersec/${project.repo}\n\nGitHub Submissions:\nAll student work is submitted via the RVU Cybersecurity GitHub organization.`);
+    }
+
+    function editProject(id) {
+        alert('Edit project ' + id);
+    }
+
+    function saveStorage() {
+        localStorage.setItem('projects', JSON.stringify(projects));
+        localStorage.setItem('projectStudents', JSON.stringify(projectStudents));
+        localStorage.setItem('users', JSON.stringify(users));
+    }
+
+    function loadStorage() {
+        const stored = localStorage.getItem('projects');
+        if (stored) projects = JSON.parse(stored);
+
+        const storedStudents = localStorage.getItem('projectStudents');
+        if (storedStudents) projectStudents = JSON.parse(storedStudents);
+
+        const storedUsers = localStorage.getItem('users');
+        if (storedUsers) users = JSON.parse(storedUsers);
+
+        // Initialize if empty
+        if (Object.keys(projectStudents).length === 0) {
+            projects.forEach(p => {
+                projectStudents[p.id] = [];
+            });
+        }
+    }
+
     function showToast(msg, type = 'success') {
         const el = document.getElementById('toast');
         el.textContent = msg;
-        el.className = `toast show`;
-        if (type === 'error') el.style.borderColor = 'rgba(255,87,87,0.3)';
+        el.className = `toast show ${type}`;
         setTimeout(() => el.classList.remove('show'), 3000);
     }
 
@@ -1703,20 +1331,21 @@
     // ═══════════════════════════════════════════════════════════════════
 
     window.addEventListener('load', () => {
-        const stored = sessionStorage.getItem('user');
+        loadStorage();
+        
+        const stored = sessionStorage.getItem('currentUser');
         if (stored) {
             currentUser = JSON.parse(stored);
+            githubAuthorized = !!currentUser.github;
             launchApp();
         }
-    });
 
-    document.getElementById('modalOverlay').addEventListener('click', (e) => {
-        if (e.target === document.getElementById('modalOverlay')) {
-            closeModal('addMentorModal');
-            closeModal('addStudentModal');
-            closeModal('addTaskModal');
-            closeModal('addSubmissionModal');
-        }
+        document.getElementById('modalOverlay').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('modalOverlay')) {
+                document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
+                document.getElementById('modalOverlay').classList.remove('open');
+            }
+        });
     });
 </script>
 
