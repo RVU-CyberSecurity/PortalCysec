@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InternTrack Pro - Authentication</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+    <style>
+        :root {
+            --bg: #0d0f12;
+            --bg2: #141720;
+            --bg3: #1a1e28;
+            --surface: #1f2433;
+            --border: rgba(255,255,255,0.07);
+            --border2: rgba(255,255,255,0.12);
+            --text: #e8eaf0;
+            --text2: #8b92a5;
+            --text3: #555e72;
+            --accent: #2de8b0;
+            --accent2: #1bba8a;
+            --accent-bg: rgba(45,232,176,0.12);
+            --blue: #4a9eff;
+            --red: #ff5757;
+            --r-sm: 6px;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body { 
+            height: 100%; 
+            font-family: 'Sora', system-ui; 
+            background: var(--bg); 
+            color: var(--text); 
+            font-size: 14px; 
+            -webkit-font-smoothing: antialiased; 
+        }
+
+        .login-screen {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-bg {
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(ellipse 80% 70% at 50% 50%, rgba(45,232,176,0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .login-container {
+            position: relative;
+            z-index: 10;
+            background: var(--surface);
+            border: 1px solid var(--border2);
+            border-radius: 14px;
+            padding: 40px;
+            width: 90%;
+            max-width: 420px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .logo-large {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 44px;
+            height: 44px;
+            background: var(--accent-bg);
+            border-radius: var(--r-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            font-size: 24px;
+            border: 1px solid rgba(45,232,176,0.2);
+        }
+
+        .login-tagline {
+            font-size: 13px;
+            color: var(--text2);
+            margin-bottom: 8px;
+        }
+
+        .org-badge {
+            display: inline-block;
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--blue);
+            background: rgba(74,158,255,0.1);
+            padding: 4px 12px;
+            border-radius: 12px;
+            border: 1px solid rgba(74,158,255,0.2);
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 24px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 12px;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 8px 12px;
+            text-align: center;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            color: var(--text2);
+            transition: all 0.2s;
+            font-size: 13px;
+            font-weight: 500;
+            background: none;
+            border: none;
+            font-family: inherit;
+        }
+
+        .tab.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+
+        .form-section { display: none; }
+        .form-section.active { display: block; }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text2);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-input, select {
+            width: 100%;
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            border-radius: var(--r-sm);
+            color: var(--text);
+            font-size: 14px;
+            font-family: inherit;
+            padding: 10px 12px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-input:focus, select:focus {
+            border-color: rgba(45,232,176,0.4);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 11px;
+            border-radius: var(--r-sm);
+            font-size: 13px;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--bg);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent2);
+        }
+
+        .btn-secondary {
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            color: var(--text2);
+        }
+
+        .btn-secondary:hover {
+            background: var(--surface);
+            color: var(--text);
+        }
+
+        .message {
+            padding: 10px 12px;
+            border-radius: var(--r-sm);
+            font-size: 12px;
+            margin-bottom: 12px;
+            display: none;
+            border: 1px solid;
+        }
+
+        .error-message {
+            background: rgba(255,87,87,0.1);
+            border-color: rgba(255,87,87,0.2);
+            color: var(--red);
+        }
+
+        .success-message {
+            background: rgba(45,232,176,0.1);
+            border-color: rgba(45,232,176,0.2);
+            color: var(--accent);
+        }
+
+        .divider {
+            text-align: center;
+            margin: 16px 0;
+            font-size: 12px;
+            color: var(--text3);
+            position: relative;
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--border);
+            z-index: 1;
+        }
+
+        .divider span {
+            position: relative;
+            z-index: 2;
+            background: var(--surface);
+            padding: 0 10px;
+        }
+
+        .github-status {
+            padding: 12px;
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            border-radius: var(--r-sm);
+            margin-bottom: 16px;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        .github-status strong {
+            color: var(--blue);
+        }
+
+        .demo-info {
+            padding: 12px;
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            border-radius: var(--r-sm);
+            font-size: 11px;
+            color: var(--text2);
+            line-height: 1.8;
+            margin-top: 16px;
+        }
+
+        @media (max-width: 768px) {
+            .login-container { width: 95%; max-width: 400px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-screen">
+    <div class="login-bg"></div>
+    <div class="login-container">
+        <div class="login-header">
+            <div class="logo-large">
+                <span class="logo-icon"><i class="ti ti-building-community"></i></span>
+                <div>
+                    <div>Intern<span style="color:var(--accent)">Track</span> Pro</div>
+                    <div style="font-size: 11px; color: var(--text2); font-weight: 400;">RVU Cybersecurity</div>
+                </div>
+            </div>
+            <p class="login-tagline">Advanced Project Management System</p>
+            <span class="org-badge"><i class="ti ti-brand-github" style="font-size: 11px; margin-right: 3px;"></i>GitHub Integrated</span>
+        </div>
+
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('login')">Sign In</button>
+            <button class="tab" onclick="switchTab('register')">Register</button>
+            <button class="tab" onclick="switchTab('admin')">Admin Config</button>
+        </div>
+
+        <!-- Login Form -->
+        <div id="loginSection" class="form-section active">
+            <div id="loginError" class="message error-message"></div>
+            <div id="loginSuccess" class="message success-message"></div>
+
+            <div class="form-group">
+                <label class="form-label">Email</label>
+                <input type="email" id="loginEmail" class="form-input" placeholder="your@email.com">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Password</label>
+                <input type="password" id="loginPassword" class="form-input" placeholder="••••••••">
+            </div>
+
+            <button class="btn btn-primary" onclick="handleLogin()">
+                <i class="ti ti-login"></i> Sign In
+            </button>
+
+            <div class="demo-info">
+                <strong>Demo Accounts:</strong><br>
+                Admin: admin@rvu.edu / admin123<br>
+                Mentor: mentor@rvu.edu / pass123<br>
+                Student: student@rvu.edu / pass123
+            </div>
+        </div>
+
+        <!-- Register Form -->
+        <div id="registerSection" class="form-section">
+            <div id="registerError" class="message error-message"></div>
+            <div id="registerSuccess" class="message success-message"></div>
+
+            <div class="form-group">
+                <label class="form-label">Full Name</label>
+                <input type="text" id="registerName" class="form-input" placeholder="Your full name">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Email</label>
+                <input type="email" id="registerEmail" class="form-input" placeholder="your@email.com">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Password</label>
+                <input type="password" id="registerPassword" class="form-input" placeholder="••••••••">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Confirm Password</label>
+                <input type="password" id="registerConfirm" class="form-input" placeholder="••••••••">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Role</label>
+                <select id="registerRole" class="form-input">
+                    <option value="">Select your role</option>
+                    <option value="student">Student</option>
+                    <option value="mentor">Faculty/Mentor</option>
+                </select>
+            </div>
+
+            <button class="btn btn-primary" onclick="handleRegister()">
+                <i class="ti ti-user-plus"></i> Create Account
+            </button>
+
+            <div class="github-status">
+                <strong>GitHub Integration Ready</strong><br>
+                Your submissions will be automatically pushed to the RVU Cybersecurity GitHub organization. No manual configuration needed.
+            </div>
+        </div>
+
+        <!-- Admin Config Form -->
+        <div id="adminSection" class="form-section">
+            <div id="adminError" class="message error-message"></div>
+            <div id="adminSuccess" class="message success-message"></div>
+
+            <div class="form-group">
+                <label class="form-label">Admin Email</label>
+                <input type="email" id="adminEmail" class="form-input" placeholder="admin@rvu.edu">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Admin Password</label>
+                <input type="password" id="adminPassword" class="form-input" placeholder="••••••••">
+            </div>
+
+            <button class="btn btn-secondary" onclick="loginAdmin()" style="margin-bottom: 16px;">
+                <i class="ti ti-lock"></i> Admin Access
+            </button>
+
+            <div id="adminPanel" style="display: none;">
+                <div style="padding: 16px; background: var(--bg3); border: 1px solid var(--border); border-radius: var(--r-sm); margin-bottom: 16px;">
+                    <div style="font-size: 13px; font-weight: 600; margin-bottom: 12px; color: var(--accent);">GitHub Organization Setup</div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Organization Name</label>
+                        <input type="text" id="ghOrg" class="form-input" placeholder="rvu-cybersecurity" value="rvu-cybersecurity">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">OAuth Client ID</label>
+                        <input type="text" id="ghClientId" class="form-input" placeholder="Ov23li...">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">OAuth Client Secret</label>
+                        <input type="password" id="ghClientSecret" class="form-input" placeholder="ghp_...">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Personal Access Token</label>
+                        <input type="password" id="ghToken" class="form-input" placeholder="ghp_...">
+                    </div>
+
+                    <button class="btn btn-primary" onclick="saveGitHubConfig()">
+                        <i class="ti ti-check"></i> Save Configuration
+                    </button>
+                </div>
+
+                <div style="padding: 12px; background: rgba(45,232,176,0.1); border: 1px solid rgba(45,232,176,0.2); border-radius: var(--r-sm); font-size: 12px; color: var(--text2); line-height: 1.6;">
+                    <strong style="color: var(--accent);">Setup Instructions:</strong><br>
+                    1. Create GitHub organization for your institution<br>
+                    2. Register OAuth App in GitHub Settings<br>
+                    3. Generate Personal Access Token<br>
+                    4. Enter credentials above to enable automatic submissions
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ═══════════════════════════════════════════════════════════════════
+    // USER DATABASE
+    // ═══════════════════════════════════════════════════════════════════
+
+    const DEMO_USERS = {
+        'admin@rvu.edu': {
+            name: 'Admin',
+            email: 'admin@rvu.edu',
+            password: 'admin123',
+            role: 'admin',
+            createdAt: new Date().toISOString()
+        },
+        'mentor@rvu.edu': {
+            name: 'Dr. Manish Kumar',
+            email: 'mentor@rvu.edu',
+            password: 'pass123',
+            role: 'mentor',
+            createdAt: new Date().toISOString()
+        },
+        'student@rvu.edu': {
+            name: 'Student User',
+            email: 'student@rvu.edu',
+            password: 'pass123',
+            role: 'student',
+            createdAt: new Date().toISOString()
+        }
+    };
+
+    // Initialize users from localStorage
+    let users = JSON.parse(localStorage.getItem('users')) || {};
+    Object.assign(users, DEMO_USERS); // Merge demo users
+
+    // GitHub Config
+    let githubConfig = JSON.parse(localStorage.getItem('githubConfig')) || {
+        org: 'rvu-cybersecurity',
+        clientId: '',
+        clientSecret: '',
+        token: '',
+        isConfigured: false
+    };
+
+    // ═══════════════════════════════════════════════════════════════════
+    // TAB SWITCHING
+    // ═══════════════════════════════════════════════════════════════════
+
+    function switchTab(tab) {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.form-section').forEach(s => s.classList.remove('active'));
+        
+        event.target.classList.add('active');
+        document.getElementById(tab + 'Section').classList.add('active');
+    }
+
+    // ═══════════════════════════════════════════════════════════════════
+    // LOGIN
+    // ═══════════════════════════════════════════════════════════════════
+
+    function handleLogin() {
+        const email = document.getElementById('loginEmail').value.trim();
+        const password = document.getElementById('loginPassword').value;
+
+        if (!email || !password) {
+            showError('loginError', 'Please fill all fields');
+            return;
+        }
+
+        const user = users[email];
+
+        if (!user || user.password !== password) {
+            showError('loginError', 'Invalid email or password');
+            return;
+        }
+
+        // Store user session
+        const sessionUser = {
+            email: user.email,
+            name: user.name,
+            role: user.role,
+            loginTime: new Date().toISOString()
+        };
+
+        localStorage.setItem('currentUser', JSON.stringify(sessionUser));
+        
+        showSuccess('loginSuccess', '✓ Login successful! Redirecting...');
+
+        setTimeout(() => {
+            window.location.href = 'interntrack-pro-app.html';
+        }, 1500);
+    }
+
+    // ═══════════════════════════════════════════════════════════════════
+    // REGISTRATION
+    // ═══════════════════════════════════════════════════════════════════
+
+    function handleRegister() {
+        const name = document.getElementById('registerName').value.trim();
+        const email = document.getElementById('registerEmail').value.trim();
+        const password = document.getElementById('registerPassword').value;
+        const confirm = document.getElementById('registerConfirm').value;
+        const role = document.getElementById('registerRole').value;
+
+        if (!name || !email || !password || !confirm || !role) {
+            showError('registerError', 'Please fill all fields');
+            return;
+        }
+
+        if (password !== confirm) {
+            showError('registerError', 'Passwords do not match');
+            return;
+        }
+
+        if (password.length < 6) {
+            showError('registerError', 'Password must be at least 6 characters');
+            return;
+        }
+
+        if (users[email]) {
+            showError('registerError', 'Email already registered');
+            return;
+        }
+
+        // Create user
+        users[email] = {
+            name,
+            email,
+            password,
+            role,
+            createdAt: new Date().toISOString()
+        };
+
+        localStorage.setItem('users', JSON.stringify(users));
+
+        showSuccess('registerSuccess', '✓ Account created successfully! You can now sign in.');
+
+        // Clear form
+        document.getElementById('registerName').value = '';
+        document.getElementById('registerEmail').value = '';
+        document.getElementById('registerPassword').value = '';
+        document.getElementById('registerConfirm').value = '';
+        document.getElementById('registerRole').value = '';
+
+        // Switch to login tab
+        setTimeout(() => {
+            document.querySelector('[onclick="switchTab(\'login\')"]').click();
+        }, 2000);
+    }
+
+    // ═══════════════════════════════════════════════════════════════════
+    // ADMIN CONFIG
+    // ═══════════════════════════════════════════════════════════════════
+
+    function loginAdmin() {
+        const email = document.getElementById('adminEmail').value.trim();
+        const password = document.getElementById('adminPassword').value;
+
+        if (!email || !password) {
+            showError('adminError', 'Please enter credentials');
+            return;
+        }
+
+        const user = users[email];
+
+        if (!user || user.password !== password || user.role !== 'admin') {
+            showError('adminError', 'Invalid admin credentials');
+            return;
+        }
+
+        // Show admin panel
+        document.getElementById('adminPanel').style.display = 'block';
+
+        // Load existing config
+        document.getElementById('ghOrg').value = githubConfig.org || 'rvu-cybersecurity';
+        document.getElementById('ghClientId').value = githubConfig.clientId || '';
+        document.getElementById('ghClientSecret').value = githubConfig.clientSecret || '';
+        document.getElementById('ghToken').value = githubConfig.token || '';
+
+        showSuccess('adminSuccess', '✓ Admin access granted');
+    }
+
+    function saveGitHubConfig() {
+        const org = document.getElementById('ghOrg').value.trim();
+        const clientId = document.getElementById('ghClientId').value.trim();
+        const clientSecret = document.getElementById('ghClientSecret').value.trim();
+        const token = document.getElementById('ghToken').value.trim();
+
+        if (!org || !clientId || !clientSecret || !token) {
+            showError('adminError', 'Please fill all fields');
+            return;
+        }
+
+        githubConfig = {
+            org,
+            clientId,
+            clientSecret,
+            token,
+            isConfigured: true,
+            configuredAt: new Date().toISOString()
+        };
+
+        localStorage.setItem('githubConfig', JSON.stringify(githubConfig));
+
+        showSuccess('adminSuccess', '✓ GitHub configuration saved successfully!');
+    }
+
+    // ═══════════════════════════════════════════════════════════════════
+    // UI HELPERS
+    // ═══════════════════════════════════════════════════════════════════
+
+    function showError(id, msg) {
+        const el = document.getElementById(id);
+        el.textContent = msg;
+        el.style.display = 'block';
+        setTimeout(() => el.style.display = 'none', 4000);
+    }
+
+    function showSuccess(id, msg) {
+        const el = document.getElementById(id);
+        el.textContent = msg;
+        el.style.display = 'block';
+        setTimeout(() => el.style.display = 'none', 4000);
+    }
+
+    // ═══════════════════════════════════════════════════════════════════
+    // INITIALIZATION
+    // ═══════════════════════════════════════════════════════════════════
+
+    window.addEventListener('load', () => {
+        // Check if already logged in
+        const currentUser = localStorage.getItem('currentUser');
+        if (currentUser) {
+            window.location.href = 'interntrack-pro-app.html';
+        }
+    });
+
+    // Handle GitHub OAuth callback
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('code')) {
+        const code = urlParams.get('code');
+        // Store OAuth code for backend processing
+        sessionStorage.setItem('ghOAuthCode', code);
+        console.log('GitHub OAuth code received:', code);
+    }
+</script>
+
+</body>
+</html>
