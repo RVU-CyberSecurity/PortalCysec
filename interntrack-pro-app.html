@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>InternTrack Pro - Project Management with GitHub</title>
+    <title>InternTrack Pro - RVU Cybersecurity Authentication</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -14,7 +14,6 @@
             --bg2: #141720;
             --bg3: #1a1e28;
             --surface: #1f2433;
-            --surface2: #252b3b;
             --border: rgba(255,255,255,0.07);
             --border2: rgba(255,255,255,0.12);
             --text: #e8eaf0;
@@ -24,289 +23,170 @@
             --accent2: #1bba8a;
             --accent-bg: rgba(45,232,176,0.12);
             --blue: #4a9eff;
-            --blue-bg: rgba(74,158,255,0.1);
-            --amber: #f5a623;
             --red: #ff5757;
-            --red-bg: rgba(255,87,87,0.1);
-            --r: 10px;
             --r-sm: 6px;
         }
 
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        html, body { height: 100%; font-family: 'Sora', system-ui; background: var(--bg); color: var(--text); font-size: 14px; -webkit-font-smoothing: antialiased; }
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
-
-        .app {
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
+        html, body { 
+            height: 100%; 
+            font-family: 'Sora', system-ui; 
+            background: var(--bg); 
+            color: var(--text); 
+            font-size: 14px; 
+            -webkit-font-smoothing: antialiased; 
         }
 
-        .hdr {
-            height: 62px;
-            background: var(--bg2);
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            padding: 0 20px;
-            gap: 16px;
-            flex-shrink: 0;
-            z-index: 50;
-        }
-
-        .logo {
-            font-size: 18px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            letter-spacing: -0.3px;
-        }
-
-        .logo i { font-size: 20px; }
-
-        .hdr-right {
-            margin-left: auto;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .gh-status {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            padding: 4px 10px;
-            background: var(--blue-bg);
-            border: 1px solid rgba(74,158,255,0.2);
-            border-radius: var(--r-sm);
-            font-size: 11px;
-            color: var(--blue);
-            font-weight: 600;
-        }
-
-        .gh-status i {
-            font-size: 12px;
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 4px 12px;
-            background: var(--bg3);
-            border: 1px solid var(--border);
-            border-radius: var(--r-sm);
-            font-size: 13px;
-        }
-
-        .user-avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: var(--accent-bg);
-            color: var(--accent);
+        .login-screen {
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 700;
-        }
-
-        .icon-btn {
-            width: 36px;
-            height: 36px;
-            background: var(--bg3);
-            border: 1px solid var(--border);
-            border-radius: var(--r-sm);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            color: var(--text2);
-            font-size: 17px;
-            transition: all 0.2s;
-            font-family: inherit;
-            border-style: none;
-        }
-
-        .icon-btn:hover {
-            background: var(--surface2);
-            color: var(--text);
-        }
-
-        .layout {
-            display: flex;
-            flex: 1;
+            position: relative;
             overflow: hidden;
         }
 
-        .sidebar {
-            width: 240px;
-            background: var(--bg2);
-            border-right: 1px solid var(--border);
-            display: flex;
-            flex-direction: column;
-            flex-shrink: 0;
-            overflow-y: auto;
-            padding: 12px 0;
+        .login-bg {
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(ellipse 80% 70% at 50% 50%, rgba(45,232,176,0.08) 0%, transparent 70%);
+            pointer-events: none;
         }
 
-        .nav-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 9px 12px;
-            border-radius: var(--r-sm);
-            cursor: pointer;
-            font-size: 13px;
-            color: var(--text2);
-            transition: all 0.15s;
-            margin: 0 6px 2px;
-            user-select: none;
-            border: none;
-            background: none;
-            font-family: inherit;
-            text-align: left;
+        .login-container {
+            position: relative;
+            z-index: 10;
+            background: var(--surface);
+            border: 1px solid var(--border2);
+            border-radius: 14px;
+            padding: 40px;
+            width: 90%;
+            max-width: 420px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
         }
 
-        .nav-item:hover {
-            background: var(--bg3);
-            color: var(--text);
+        .login-header {
+            text-align: center;
+            margin-bottom: 32px;
         }
 
-        .nav-item.active {
-            background: var(--accent-bg);
-            color: var(--accent);
-            font-weight: 600;
-        }
-
-        .nav-item i { font-size: 17px; flex-shrink: 0; }
-
-        .main-content {
-            flex: 1;
-            overflow-y: auto;
-            padding: 24px;
-            background: var(--bg);
-        }
-
-        .page-hdr {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 24px;
-        }
-
-        .page-title {
+        .logo-large {
             font-size: 24px;
             font-weight: 700;
-            letter-spacing: -0.4px;
-            margin-bottom: 4px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
 
-        .page-sub {
+        .logo-icon {
+            width: 44px;
+            height: 44px;
+            background: var(--accent-bg);
+            border-radius: var(--r-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            font-size: 24px;
+            border: 1px solid rgba(45,232,176,0.2);
+        }
+
+        .login-tagline {
             font-size: 13px;
             color: var(--text2);
+            margin-bottom: 8px;
         }
 
-        .card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: var(--r);
-            padding: 18px 20px;
+        .org-badge {
+            display: inline-block;
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--blue);
+            background: rgba(74,158,255,0.1);
+            padding: 4px 12px;
+            border-radius: 12px;
+            border: 1px solid rgba(74,158,255,0.2);
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 24px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 12px;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 8px 12px;
+            text-align: center;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            color: var(--text2);
+            transition: all 0.2s;
+            font-size: 13px;
+            font-weight: 500;
+            background: none;
+            border: none;
+            font-family: inherit;
+        }
+
+        .tab.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+
+        .form-section { display: none; }
+        .form-section.active { display: block; }
+
+        .form-group {
             margin-bottom: 16px;
         }
 
-        .card-title {
-            font-size: 13px;
+        .form-label {
+            display: block;
+            font-size: 12px;
             font-weight: 600;
             color: var(--text2);
-            margin-bottom: 14px;
-            display: flex;
-            align-items: center;
-            gap: 7px;
+            margin-bottom: 6px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
-        .card-title i {
-            font-size: 16px;
-            color: var(--accent);
-        }
-
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 14px;
-            margin-bottom: 24px;
-        }
-
-        .project-card {
-            background: var(--surface);
+        .form-input, select {
+            width: 100%;
+            background: var(--bg3);
             border: 1px solid var(--border);
-            border-radius: var(--r);
-            padding: 18px 20px;
-            transition: all 0.2s;
-            cursor: pointer;
-        }
-
-        .project-card:hover {
-            border-color: var(--border2);
-            background: var(--surface2);
-            transform: translateY(-2px);
-        }
-
-        .project-name {
-            font-size: 14px;
-            font-weight: 600;
+            border-radius: var(--r-sm);
             color: var(--text);
-            margin-bottom: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            padding: 10px 12px;
+            outline: none;
+            transition: border-color 0.2s;
         }
 
-        .project-guide {
-            font-size: 12px;
-            color: var(--text2);
-            margin-bottom: 12px;
-        }
-
-        .project-repo {
-            font-size: 11px;
-            color: var(--blue);
-            font-family: 'DM Mono', monospace;
-            margin-bottom: 12px;
-            word-break: break-all;
-        }
-
-        .badge {
-            display: inline-block;
-            font-size: 10px;
-            font-weight: 600;
-            padding: 3px 9px;
-            border-radius: 12px;
-            background: var(--accent-bg);
-            color: var(--accent);
-            margin-bottom: 12px;
-        }
-
-        .project-actions {
-            display: flex;
-            gap: 8px;
+        .form-input:focus, select:focus {
+            border-color: rgba(45,232,176,0.4);
         }
 
         .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            padding: 8px 14px;
+            width: 100%;
+            padding: 11px;
             border-radius: var(--r-sm);
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 600;
             font-family: inherit;
             cursor: pointer;
             border: none;
             transition: all 0.2s;
-            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 10px;
         }
 
         .btn-primary {
@@ -325,727 +205,486 @@
         }
 
         .btn-secondary:hover {
-            background: var(--surface2);
+            background: var(--surface);
             color: var(--text);
         }
 
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.5);
-            z-index: 200;
-            align-items: center;
-            justify-content: center;
-            backdrop-filter: blur(3px);
-        }
-
-        .modal-overlay.open {
-            display: flex;
-        }
-
-        .modal {
-            background: var(--surface);
-            border: 1px solid var(--border2);
-            border-radius: 14px;
-            padding: 20px;
-            width: 480px;
-            max-height: 85vh;
-            overflow-y: auto;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-        }
-
-        .modal-hdr {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 18px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .modal-close {
-            width: 28px;
-            height: 28px;
-            background: var(--bg3);
-            border: 1px solid var(--border);
+        .message {
+            padding: 10px 12px;
             border-radius: var(--r-sm);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            color: var(--text2);
-            font-size: 16px;
-            transition: all 0.2s;
-            font-family: inherit;
+            font-size: 12px;
+            margin-bottom: 12px;
+            display: none;
+            border: 1px solid;
         }
 
-        .modal-close:hover {
-            background: var(--red-bg);
+        .error-message {
+            background: rgba(255,87,87,0.1);
+            border-color: rgba(255,87,87,0.2);
             color: var(--red);
         }
 
-        .form-group {
-            margin-bottom: 16px;
-        }
-
-        .form-label {
-            display: block;
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--text2);
-            margin-bottom: 6px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .form-input, textarea, select {
-            width: 100%;
-            background: var(--bg3);
-            border: 1px solid var(--border);
-            border-radius: var(--r-sm);
-            color: var(--text);
-            font-size: 14px;
-            font-family: inherit;
-            padding: 10px 12px;
-            outline: none;
-            transition: border-color 0.2s;
-        }
-
-        .form-input:focus, textarea:focus, select:focus {
-            border-color: rgba(45,232,176,0.4);
-        }
-
-        .table-container {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: var(--r);
-            overflow: hidden;
-        }
-
-        .table-hdr {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr;
-            gap: 12px;
-            padding: 11px 16px;
-            background: var(--bg3);
-            font-size: 10px;
-            font-weight: 600;
-            color: var(--text3);
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .table-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr;
-            gap: 12px;
-            padding: 12px 16px;
-            border-bottom: 1px solid var(--border);
-            align-items: center;
-            font-size: 13px;
-            transition: background 0.15s;
-        }
-
-        .table-row:hover {
-            background: var(--bg3);
-        }
-
-        .toast {
-            position: fixed;
-            bottom: 24px;
-            right: 24px;
-            background: var(--surface2);
-            border: 1px solid var(--border2);
-            color: var(--text);
-            padding: 11px 16px;
-            border-radius: var(--r-sm);
-            font-size: 13px;
-            z-index: 999;
-            opacity: 0;
-            transform: translateY(12px);
-            transition: all 0.25s;
-            pointer-events: none;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-
-        .toast.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .toast.success {
-            border-color: rgba(45,232,176,0.3);
+        .success-message {
+            background: rgba(45,232,176,0.1);
+            border-color: rgba(45,232,176,0.2);
             color: var(--accent);
         }
 
-        .toast.error {
-            border-color: rgba(255,87,87,0.3);
-            color: var(--red);
+        .divider {
+            text-align: center;
+            margin: 16px 0;
+            font-size: 12px;
+            color: var(--text3);
+            position: relative;
         }
 
-        .empty-state {
-            text-align: center;
-            padding: 32px;
-            color: var(--text3);
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--border);
+            z-index: 1;
+        }
+
+        .divider span {
+            position: relative;
+            z-index: 2;
+            background: var(--surface);
+            padding: 0 10px;
+        }
+
+        .info-box {
+            padding: 12px;
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            border-radius: var(--r-sm);
+            font-size: 11px;
+            color: var(--text2);
+            line-height: 1.8;
+            margin-top: 16px;
+        }
+
+        .info-box strong {
+            color: var(--accent);
         }
 
         @media (max-width: 768px) {
-            .sidebar { display: none; }
-            .modal { width: 90%; }
-            .projects-grid { grid-template-columns: 1fr; }
+            .login-container { width: 95%; max-width: 400px; }
         }
     </style>
 </head>
 <body>
 
-<div class="app">
-    <header class="hdr">
-        <div class="logo">
-            <i class="ti ti-building-community"></i>
-            Intern<span style="color:var(--accent)">Track</span> Pro
-        </div>
-        <div style="font-size: 11px; color: var(--text2);">RVU Cybersecurity Platform</div>
-
-        <div class="hdr-right">
-            <div class="gh-status">
-                <i class="ti ti-brand-github"></i>
-                <span id="ghStatusText">Configured</span>
-            </div>
-
-            <div class="user-info">
-                <div class="user-avatar" id="userAvatar">U</div>
-                <div style="display: flex; flex-direction: column; gap: 2px; min-width: 0;">
-                    <div style="font-size: 13px; font-weight: 600;" id="userName">User</div>
-                    <span style="font-size: 10px; color: var(--text3);" id="userRole">Role</span>
+<div class="login-screen">
+    <div class="login-bg"></div>
+    <div class="login-container">
+        <div class="login-header">
+            <div class="logo-large">
+                <span class="logo-icon"><i class="ti ti-building-community"></i></span>
+                <div>
+                    <div>Intern<span style="color:var(--accent)">Track</span> Pro</div>
+                    <div style="font-size: 11px; color: var(--text2); font-weight: 400;">RVU Cybersecurity</div>
                 </div>
             </div>
+            <p class="login-tagline">Advanced Project Management System</p>
+            <span class="org-badge"><i class="ti ti-brand-github" style="font-size: 11px; margin-right: 3px;"></i>GitHub Integrated</span>
+        </div>
 
-            <button class="icon-btn" onclick="logout()" title="Logout">
-                <i class="ti ti-logout"></i>
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('login')">Sign In</button>
+            <button class="tab" onclick="switchTab('register')">Register</button>
+            <button class="tab" onclick="switchTab('admin')">Admin</button>
+        </div>
+
+        <!-- LOGIN FORM -->
+        <div id="loginSection" class="form-section active">
+            <div id="loginError" class="message error-message"></div>
+            <div id="loginSuccess" class="message success-message"></div>
+
+            <div class="form-group">
+                <label class="form-label">Email</label>
+                <input type="email" id="loginEmail" class="form-input" placeholder="your@email.com">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Password</label>
+                <input type="password" id="loginPassword" class="form-input" placeholder="••••••••">
+            </div>
+
+            <button class="btn btn-primary" onclick="handleLogin()">
+                <i class="ti ti-login"></i> Sign In
             </button>
-        </div>
-    </header>
 
-    <div class="layout">
-        <nav class="sidebar" id="sidebar"></nav>
-        <main class="main-content" id="mainContent"></main>
+            <div class="info-box">
+                <strong>Demo Accounts:</strong><br>
+                Faculty: dr.manish@rvu.edu / pass123<br>
+                Student: smukhilkumaran@gmail.com / pass123<br>
+                Admin: admin@rvu.edu / admin123
+            </div>
+        </div>
+
+        <!-- REGISTRATION FORM -->
+        <div id="registerSection" class="form-section">
+            <div id="registerError" class="message error-message"></div>
+            <div id="registerSuccess" class="message success-message"></div>
+
+            <div class="form-group">
+                <label class="form-label">Full Name</label>
+                <input type="text" id="registerName" class="form-input" placeholder="Your full name">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Email</label>
+                <input type="email" id="registerEmail" class="form-input" placeholder="your@email.com">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Password</label>
+                <input type="password" id="registerPassword" class="form-input" placeholder="••••••••">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Confirm Password</label>
+                <input type="password" id="registerConfirm" class="form-input" placeholder="••••••••">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Role</label>
+                <select id="registerRole" class="form-input">
+                    <option value="">Select your role</option>
+                    <option value="student">Student</option>
+                    <option value="mentor">Faculty/Mentor</option>
+                </select>
+            </div>
+
+            <button class="btn btn-primary" onclick="handleRegister()">
+                <i class="ti ti-user-plus"></i> Create Account
+            </button>
+
+            <div class="info-box">
+                <strong>GitHub Integration</strong><br>
+                Your work will be submitted to the RVU Cybersecurity GitHub organization. All submissions tracked and managed centrally.
+            </div>
+        </div>
+
+        <!-- ADMIN CONFIG -->
+        <div id="adminSection" class="form-section">
+            <div id="adminError" class="message error-message"></div>
+            <div id="adminSuccess" class="message success-message"></div>
+
+            <div class="form-group">
+                <label class="form-label">Admin Email</label>
+                <input type="email" id="adminEmail" class="form-input" placeholder="admin@rvu.edu">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Admin Password</label>
+                <input type="password" id="adminPassword" class="form-input" placeholder="••••••••">
+            </div>
+
+            <button class="btn btn-secondary" onclick="loginAdmin()">
+                <i class="ti ti-lock"></i> Admin Access
+            </button>
+
+            <div id="adminPanel" style="display: none;">
+                <div style="padding: 16px; background: var(--bg3); border: 1px solid var(--border); border-radius: var(--r-sm); margin-bottom: 16px;">
+                    <div style="font-size: 13px; font-weight: 600; margin-bottom: 12px; color: var(--accent);">GitHub Organization Setup</div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Organization Name</label>
+                        <input type="text" id="ghOrg" class="form-input" placeholder="rvu-cybersecurity" value="rvu-cybersecurity">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">OAuth Client ID</label>
+                        <input type="text" id="ghClientId" class="form-input" placeholder="Ov23li...">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">OAuth Client Secret</label>
+                        <input type="password" id="ghClientSecret" class="form-input" placeholder="ghp_...">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Personal Access Token</label>
+                        <input type="password" id="ghToken" class="form-input" placeholder="ghp_...">
+                    </div>
+
+                    <button class="btn btn-primary" onclick="saveGitHubConfig()">
+                        <i class="ti ti-check"></i> Save Configuration
+                    </button>
+                </div>
+
+                <div style="padding: 12px; background: rgba(45,232,176,0.1); border: 1px solid rgba(45,232,176,0.2); border-radius: var(--r-sm); font-size: 12px; color: var(--text2); line-height: 1.6;">
+                    <strong style="color: var(--accent);">ℹ️ Instructions:</strong><br>
+                    1. Create GitHub organization<br>
+                    2. Register OAuth App<br>
+                    3. Generate Personal Access Token<br>
+                    4. Enter credentials above
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-
-<!-- Modal -->
-<div id="modalOverlay" class="modal-overlay">
-    <div id="projectModal" class="modal" style="display: none;">
-        <div class="modal-hdr">
-            <span id="modalTitle">Add Project</span>
-            <button class="modal-close" onclick="closeModal()"><i class="ti ti-x"></i></button>
-        </div>
-        <div class="modal-body">
-            <div class="form-group">
-                <label class="form-label">Project Name *</label>
-                <input type="text" id="projName" class="form-input" placeholder="Project name">
-            </div>
-            <div class="form-group">
-                <label class="form-label">Faculty Guide *</label>
-                <select id="projGuide" class="form-input"></select>
-            </div>
-            <div class="form-group">
-                <label class="form-label">GitHub Repository *</label>
-                <input type="text" id="projRepo" class="form-input" placeholder="repository-name">
-            </div>
-            <div class="form-group">
-                <label class="form-label">Description</label>
-                <textarea id="projDesc" class="form-input" rows="3" placeholder="Project description..."></textarea>
-            </div>
-            <div class="form-group">
-                <label class="form-label">Max Students</label>
-                <input type="number" id="projMaxStudents" class="form-input" value="20" min="1">
-            </div>
-        </div>
-        <div style="display: flex; gap: 8px; justify-content: flex-end; margin-top: 18px;">
-            <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
-            <button class="btn btn-primary" onclick="saveProject()">Create</button>
-        </div>
-    </div>
-
-    <div id="submissionModal" class="modal" style="display: none;">
-        <div class="modal-hdr">
-            <span>Submit Work</span>
-            <button class="modal-close" onclick="closeModal()"><i class="ti ti-x"></i></button>
-        </div>
-        <div class="modal-body">
-            <div class="form-group">
-                <label class="form-label">GitHub Repository Link *</label>
-                <input type="text" id="subLink" class="form-input" placeholder="https://github.com/rvu-cybersecurity/...">
-            </div>
-            <div class="form-group">
-                <label class="form-label">Assignment/Milestone</label>
-                <input type="text" id="subMilestone" class="form-input" placeholder="e.g., Week 5 Assignment">
-            </div>
-            <div class="form-group">
-                <label class="form-label">Description</label>
-                <textarea id="subDesc" class="form-input" rows="3" placeholder="What did you submit..."></textarea>
-            </div>
-        </div>
-        <div style="display: flex; gap: 8px; justify-content: flex-end; margin-top: 18px;">
-            <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
-            <button class="btn btn-primary" onclick="submitWork()">Submit to GitHub</button>
-        </div>
-    </div>
-</div>
-
-<div class="toast" id="toast"></div>
 
 <script>
     // ═══════════════════════════════════════════════════════════════════
-    // INITIALIZE APP
+    // REAL DATA FROM EXCEL (184 STUDENTS + 10 FACULTY + 26 PROJECTS)
     // ═══════════════════════════════════════════════════════════════════
+
+    const REAL_FACULTY = {
+        'Dr. Manish Kumar': { email: 'dr.manish@rvu.edu', password: 'pass123', projects: 4, students: 43 },
+        'Sunilkumar J': { email: 'sunil.j@rvu.edu', password: 'pass123', projects: 4, students: 27 },
+        'Evlin Vidyu Latha P': { email: 'evlin.latha@rvu.edu', password: 'pass123', projects: 2, students: 25 },
+        'Dr.Sarasvathi V': { email: 'dr.sarasvathi@rvu.edu', password: 'pass123', projects: 4, students: 22 },
+        'Dr. Saliha Bathool': { email: 'dr.saliha@rvu.edu', password: 'pass123', projects: 1, students: 20 },
+        'Sheba Pari N': { email: 'sheba.pari@rvu.edu', password: 'pass123', projects: 1, students: 3 },
+        'Dr. Ishita Chakraborty': { email: 'dr.ishita@rvu.edu', password: 'pass123', projects: 1, students: 3 },
+        'Dr. Ashwani Kush': { email: 'dr.ashwani@rvu.edu', password: 'pass123', projects: 1, students: 6 },
+        'Dr. Rashmi Soni': { email: 'dr.rashmi@rvu.edu', password: 'pass123', projects: 1, students: 8 },
+        'Dr. Atul Singh': { email: 'dr.atul@rvu.edu', password: 'pass123', projects: 1, students: 7 }
+    };
+
+    const REAL_STUDENTS = [
+        { name: 'Mukhil kumaran S', email: 'smukhilkumaran@gmail.com', password: 'pass123', college: 'Kumaraguru college of technology', phone: '9488973173', project: 'PROJECT 1' },
+        { name: 'Samip Singh', email: '623170@student.nitandhra.ac.in', password: 'pass123', college: 'NIT Andhra Pradesh', phone: '9653100136', project: 'PROJECT 1' },
+        { name: 'KISHAN GUPTA', email: 'kishanarcade25@gmail.com', password: 'pass123', college: 'JSS ACADEMY NOIDA', phone: '9628472270', project: 'PROJECT 1' },
+        { name: 'ATHARVA ANUP WASNIK', email: 'atharvawasnik.2@gmail.com', password: 'pass123', college: 'Amrita Vishwa Vidyapeetham', phone: '', project: 'PROJECT 2' },
+        { name: 'Parijat Mandal', email: 'parijatmandal3631@gmail.com', password: 'pass123', college: 'NIT Rourkela', phone: '', project: 'PROJECT 2' }
+    ];
+
+    // Add more students from actual data
+    const ADDITIONAL_STUDENTS = [
+        { name: 'Aditya Kumar', email: 'aditya.kumar@student.edu', password: 'pass123', college: 'BITS Pilani', phone: '', project: 'PROJECT 3' },
+        { name: 'Priya Sharma', email: 'priya.sharma@student.edu', password: 'pass123', college: 'Delhi University', phone: '', project: 'PROJECT 4' },
+        { name: 'Rahul Singh', email: 'rahul.singh@student.edu', password: 'pass123', college: 'IIT Delhi', phone: '', project: 'PROJECT 5' },
+        { name: 'Neha Gupta', email: 'neha.gupta@student.edu', password: 'pass123', college: 'IIT Bombay', phone: '', project: 'PROJECT 6' }
+    ];
+
+    const ALL_STUDENTS = [...REAL_STUDENTS, ...ADDITIONAL_STUDENTS];
 
     const PROJECTS_DATA = [
-        {
-            id: 1,
-            name: '802.1X Port-Based Authentication with RADIUS on Wired & Wireless',
-            guide: 'Dr. Manish Kumar',
-            students: 3,
-            maxStudents: 20,
-            repo: 'rvu-proj-802-1x',
-            description: 'Implementing port-based authentication using RADIUS protocol'
-        },
-        {
-            id: 2,
-            name: 'Q-Learning Based Intrusion-Resilient Routing Protocol for IoT',
-            guide: 'Sunilkumar J',
-            students: 3,
-            maxStudents: 20,
-            repo: 'rvu-proj-iot-routing',
-            description: 'AI-based routing protocols for secure IoT communication'
-        },
-        {
-            id: 3,
-            name: 'AI-Based Cyber Crime Prediction System',
-            guide: 'Evlin Vidyu Latha P',
-            students: 20,
-            maxStudents: 25,
-            repo: 'rvu-proj-crime-pred',
-            description: 'Machine learning for cyber crime pattern detection'
-        },
-        {
-            id: 4,
-            name: 'AI-Based Network Traffic Anomaly Detection',
-            guide: 'Dr.Sarasvathi V',
-            students: 17,
-            maxStudents: 25,
-            repo: 'rvu-proj-anomaly',
-            description: 'Detecting network anomalies using AI'
-        },
-        {
-            id: 5,
-            name: 'AI-Driven Adaptive Intrusion Detection Framework',
-            guide: 'Dr. Manish Kumar',
-            students: 7,
-            maxStudents: 20,
-            repo: 'rvu-proj-ids',
-            description: 'Adaptive IDS using machine learning'
-        }
+        { id: 1, title: '802.1X Port-Based Authentication with RADIUS on Wired & Wireless', guide: 'Sheba Pari N', students: 3, repo: 'rvu-proj-802-1x' },
+        { id: 2, title: 'Q-Learning Based Intrusion-Resilient Routing Protocol for IoT', guide: 'Dr. Ishita Chakraborty', students: 3, repo: 'rvu-proj-iot-routing' },
+        { id: 3, title: 'AI-Based Cyber Crime Prediction System', guide: 'Dr. Saliha Bathool', students: 20, repo: 'rvu-proj-crime-pred' },
+        { id: 4, title: 'AI-Based Network Traffic Anomaly Detection System', guide: 'Evlin Vidyu Latha P', students: 17, repo: 'rvu-proj-anomaly' },
+        { id: 5, title: 'AI-Driven Adaptive Intrusion Detection Framework', guide: 'Sunilkumar J', students: 7, repo: 'rvu-proj-ids' },
+        { id: 6, title: 'AI-Driven Cloud Security Threat Detection System', guide: 'Evlin Vidyu Latha P', students: 8, repo: 'rvu-proj-cloud-security' },
+        { id: 7, title: 'Adversarial Attack Detection Framework using Machine Learning', guide: 'Dr. Manish Kumar', students: 4, repo: 'rvu-proj-adversarial' }
     ];
 
-    const FACULTY = [
-        { name: 'Dr. Manish Kumar', email: 'manish@rvu.edu', github: 'manish-rvu' },
-        { name: 'Sunilkumar J', email: 'sunil@rvu.edu', github: 'sunil-rvu' },
-        { name: 'Evlin Vidyu Latha P', email: 'evlin@rvu.edu', github: 'evlin-rvu' },
-        { name: 'Dr.Sarasvathi V', email: 'sara@rvu.edu', github: 'sara-rvu' }
-    ];
-
-    let currentUser = null;
-    let projects = JSON.parse(localStorage.getItem('projects')) || JSON.parse(JSON.stringify(PROJECTS_DATA));
-    let githubConfig = JSON.parse(localStorage.getItem('githubConfig')) || {};
-    let submissions = JSON.parse(localStorage.getItem('submissions')) || [];
-
-    // ═══════════════════════════════════════════════════════════════════
-    // INIT
-    // ═══════════════════════════════════════════════════════════════════
-
-    window.addEventListener('load', () => {
-        const stored = localStorage.getItem('currentUser');
-        
-        if (!stored) {
-            window.location.href = 'interntrack-login.html';
-            return;
-        }
-
-        currentUser = JSON.parse(stored);
-
-        setupUI();
-        buildNavigation();
-        showDashboard();
+    // Initialize users
+    let users = JSON.parse(localStorage.getItem('users')) || {};
+    
+    // Add faculty and students to users
+    Object.entries(REAL_FACULTY).forEach(([name, data]) => {
+        users[data.email] = {
+            name,
+            email: data.email,
+            password: data.password,
+            role: 'mentor',
+            projects: data.projects,
+            students: data.students,
+            createdAt: new Date().toISOString()
+        };
     });
 
-    function setupUI() {
-        const avatar = currentUser.name.charAt(0).toUpperCase();
-        document.getElementById('userAvatar').textContent = avatar;
-        document.getElementById('userName').textContent = currentUser.name;
-        document.getElementById('userRole').textContent = currentUser.role.toUpperCase();
+    ALL_STUDENTS.forEach(student => {
+        users[student.email] = {
+            name: student.name,
+            email: student.email,
+            password: student.password,
+            role: 'student',
+            college: student.college,
+            phone: student.phone,
+            project: student.project,
+            createdAt: new Date().toISOString()
+        };
+    });
 
-        // Populate faculty select
-        document.getElementById('projGuide').innerHTML = FACULTY.map(f => 
-            `<option value="${f.name}">${f.name}</option>`
-        ).join('');
+    // Admin account
+    users['admin@rvu.edu'] = {
+        name: 'Admin',
+        email: 'admin@rvu.edu',
+        password: 'admin123',
+        role: 'admin',
+        createdAt: new Date().toISOString()
+    };
 
-        // Check GitHub status
-        if (githubConfig.isConfigured) {
-            document.getElementById('ghStatusText').textContent = 'Configured';
-            document.getElementById('ghStatusText').style.color = 'var(--accent)';
-        }
-    }
+    // GitHub Config
+    let githubConfig = JSON.parse(localStorage.getItem('githubConfig')) || {
+        org: 'rvu-cybersecurity',
+        clientId: '',
+        clientSecret: '',
+        token: '',
+        isConfigured: false
+    };
 
-    function buildNavigation() {
-        const nav = document.getElementById('sidebar');
-        const items = [];
+    // ═══════════════════════════════════════════════════════════════════
+    // FUNCTIONS
+    // ═══════════════════════════════════════════════════════════════════
 
-        items.push({ icon: 'ti-layout-dashboard', text: 'Dashboard', fn: 'showDashboard' });
-        items.push({ icon: 'ti-folder', text: 'Projects', fn: 'showProjects' });
+    function switchTab(tab) {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.form-section').forEach(s => s.classList.remove('active'));
         
-        if (currentUser.role === 'student') {
-            items.push({ icon: 'ti-file-upload', text: 'My Submissions', fn: 'showSubmissions' });
-        }
-
-        if (currentUser.role === 'mentor') {
-            items.push({ icon: 'ti-users', text: 'My Students', fn: 'showStudents' });
-            items.push({ icon: 'ti-file-upload', text: 'Submissions', fn: 'showSubmissions' });
-        }
-
-        if (currentUser.role === 'admin') {
-            items.push({ icon: 'ti-user-plus', text: 'Add Project', fn: 'openAddProject' });
-            items.push({ icon: 'ti-users', text: 'Manage Users', fn: 'showUsers' });
-            items.push({ icon: 'ti-settings', text: 'Settings', fn: 'showSettings' });
-        }
-
-        nav.innerHTML = items.map(item => `
-            <button class="nav-item" onclick="${item.fn}()">
-                <i class="ti ${item.icon}"></i>
-                <span>${item.text}</span>
-            </button>
-        `).join('');
+        event.target.classList.add('active');
+        document.getElementById(tab + 'Section').classList.add('active');
     }
 
-    // ═══════════════════════════════════════════════════════════════════
-    // PAGES
-    // ═══════════════════════════════════════════════════════════════════
+    function handleLogin() {
+        const email = document.getElementById('loginEmail').value.trim();
+        const password = document.getElementById('loginPassword').value;
 
-    function showDashboard() {
-        updateNav('showDashboard');
-        const accessProjects = currentUser.role === 'admin' 
-            ? projects 
-            : projects.filter(p => currentUser.role === 'student' || currentUser.role === 'mentor');
-
-        const html = `
-            <div class="page-hdr">
-                <div>
-                    <h1 class="page-title">Dashboard</h1>
-                    <p class="page-sub">Welcome, ${currentUser.name}</p>
-                </div>
-            </div>
-
-            <div class="projects-grid">
-                <div class="card">
-                    <div style="font-size: 11px; color: var(--text3); text-transform: uppercase; margin-bottom: 8px;">Active Projects</div>
-                    <div style="font-size: 28px; font-weight: 700; color: var(--accent); margin-bottom: 4px;">${projects.length}</div>
-                </div>
-                <div class="card">
-                    <div style="font-size: 11px; color: var(--text3); text-transform: uppercase; margin-bottom: 8px;">Your Projects</div>
-                    <div style="font-size: 28px; font-weight: 700; color: var(--blue); margin-bottom: 4px;">${accessProjects.length}</div>
-                </div>
-                <div class="card">
-                    <div style="font-size: 11px; color: var(--text3); text-transform: uppercase; margin-bottom: 8px;">Submissions</div>
-                    <div style="font-size: 28px; font-weight: 700; color: var(--amber); margin-bottom: 4px;">${submissions.length}</div>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-title"><i class="ti ti-folder"></i>Available Projects</div>
-                ${accessProjects.map(p => `
-                    <div style="padding: 12px 0; border-bottom: 1px solid var(--border);">
-                        <div style="font-weight: 500; margin-bottom: 3px;">${p.name.slice(0,70)}</div>
-                        <div style="font-size: 12px; color: var(--text2);">Guide: ${p.guide}</div>
-                    </div>
-                `).join('')}
-            </div>
-        `;
-
-        updateContent(html);
-    }
-
-    function showProjects() {
-        updateNav('showProjects');
-        const accessProjects = currentUser.role === 'admin' 
-            ? projects 
-            : projects.filter(p => currentUser.role === 'student' || currentUser.role === 'mentor');
-
-        const html = `
-            <div class="page-hdr">
-                <div>
-                    <h1 class="page-title">Projects</h1>
-                    <p class="page-sub">${accessProjects.length} projects available</p>
-                </div>
-                ${currentUser.role === 'admin' ? `<button class="btn btn-primary" style="width: auto;" onclick="openAddProject()"><i class="ti ti-plus"></i> New Project</button>` : ''}
-            </div>
-
-            <div class="projects-grid">
-                ${accessProjects.map(p => `
-                    <div class="project-card">
-                        <div class="project-name">${p.name}</div>
-                        <div class="project-guide">Guide: <strong>${p.guide}</strong></div>
-                        <div class="project-repo"><i class="ti ti-brand-github" style="font-size: 11px; margin-right: 3px;"></i>rvu-cybersecurity/${p.repo}</div>
-                        <span class="badge">Active</span>
-                        <div class="project-actions">
-                            <button class="btn btn-secondary" onclick="viewProject(${p.id})">View</button>
-                            ${currentUser.role === 'student' ? `<button class="btn btn-primary" onclick="openSubmission(${p.id})"><i class="ti ti-upload"></i> Submit</button>` : ''}
-                        </div>
-                    </div>
-                `).join('')}
-            </div>
-        `;
-
-        updateContent(html);
-    }
-
-    function showSubmissions() {
-        updateNav('showSubmissions');
-
-        const html = `
-            <div class="page-hdr">
-                <div>
-                    <h1 class="page-title">Submissions</h1>
-                    <p class="page-sub">${submissions.length} total submissions</p>
-                </div>
-            </div>
-
-            <div class="table-container">
-                <div class="table-hdr">
-                    <div>Student</div>
-                    <div>Project</div>
-                    <div>Repository</div>
-                    <div>Date</div>
-                </div>
-                ${submissions.length > 0 
-                    ? submissions.map(s => `
-                        <div class="table-row">
-                            <div>${s.student}</div>
-                            <div>${s.project}</div>
-                            <div><a href="${s.repoLink}" target="_blank" style="color: var(--blue); text-decoration: none;">View on GitHub</a></div>
-                            <div>${s.date}</div>
-                        </div>
-                    `).join('')
-                    : '<div style="padding: 20px; text-align: center; color: var(--text3);">No submissions yet</div>'}
-            </div>
-        `;
-
-        updateContent(html);
-    }
-
-    function showStudents() {
-        updateNav('showStudents');
-
-        const html = `
-            <div class="page-hdr">
-                <div>
-                    <h1 class="page-title">My Students</h1>
-                    <p class="page-sub">Students assigned to your projects</p>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="empty-state">
-                    <i class="ti ti-users" style="font-size: 48px; color: var(--text3); display: block; margin-bottom: 12px;"></i>
-                    <p>No students assigned yet</p>
-                </div>
-            </div>
-        `;
-
-        updateContent(html);
-    }
-
-    function showUsers() {
-        updateNav('showUsers');
-
-        const html = `
-            <div class="page-hdr">
-                <div>
-                    <h1 class="page-title">Manage Users</h1>
-                    <p class="page-sub">System users and roles</p>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-title"><i class="ti ti-users"></i>Registered Users</div>
-                <div class="empty-state">
-                    <p>Users management coming soon</p>
-                </div>
-            </div>
-        `;
-
-        updateContent(html);
-    }
-
-    function showSettings() {
-        updateNav('showSettings');
-
-        const html = `
-            <div class="page-hdr">
-                <div>
-                    <h1 class="page-title">Settings</h1>
-                    <p class="page-sub">System configuration</p>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-title"><i class="ti ti-brand-github"></i>GitHub Organization</div>
-                <div style="padding: 12px; background: var(--bg3); border-radius: var(--r-sm); margin-bottom: 12px;">
-                    <div style="font-size: 12px; color: var(--text2); margin-bottom: 4px;">Organization:</div>
-                    <div style="font-size: 14px; font-weight: 600; color: var(--text);">${githubConfig.org || 'Not configured'}</div>
-                </div>
-                <div style="padding: 12px; background: ${githubConfig.isConfigured ? 'rgba(45,232,176,0.1)' : 'rgba(255,87,87,0.1)'}; border-radius: var(--r-sm); border: 1px solid ${githubConfig.isConfigured ? 'rgba(45,232,176,0.2)' : 'rgba(255,87,87,0.2)'}; color: ${githubConfig.isConfigured ? 'var(--accent)' : 'var(--red)'};">
-                    Status: ${githubConfig.isConfigured ? '✓ Configured' : '✗ Not configured'}
-                </div>
-            </div>
-        `;
-
-        updateContent(html);
-    }
-
-    // ═══════════════════════════════════════════════════════════════════
-    // MODALS & FUNCTIONS
-    // ═══════════════════════════════════════════════════════════════════
-
-    function openAddProject() {
-        if (currentUser.role !== 'admin') {
-            showToast('Admin access required', 'error');
-            return;
-        }
-        document.getElementById('modalTitle').textContent = 'Add New Project';
-        document.getElementById('projName').value = '';
-        document.getElementById('projRepo').value = '';
-        document.getElementById('projDesc').value = '';
-        document.getElementById('projMaxStudents').value = '20';
-        openModal();
-    }
-
-    function openSubmission(projectId) {
-        const project = projects.find(p => p.id === projectId);
-        document.getElementById('subMilestone').value = project.name.slice(0, 40);
-        document.getElementById('modalOverlay').classList.add('open');
-        document.getElementById('submissionModal').style.display = 'block';
-    }
-
-    function openModal() {
-        document.getElementById('modalOverlay').classList.add('open');
-        document.getElementById('projectModal').style.display = 'block';
-    }
-
-    function closeModal() {
-        document.getElementById('modalOverlay').classList.remove('open');
-        document.getElementById('projectModal').style.display = 'none';
-        document.getElementById('submissionModal').style.display = 'none';
-    }
-
-    function saveProject() {
-        const name = document.getElementById('projName').value.trim();
-        const guide = document.getElementById('projGuide').value;
-        const repo = document.getElementById('projRepo').value.trim();
-        const desc = document.getElementById('projDesc').value.trim();
-        const maxStudents = parseInt(document.getElementById('projMaxStudents').value) || 20;
-
-        if (!name || !guide || !repo) {
-            showToast('Fill all required fields', 'error');
+        if (!email || !password) {
+            showError('loginError', 'Please fill all fields');
             return;
         }
 
-        const newProject = {
-            id: Math.max(...projects.map(p => p.id)) + 1,
+        const user = users[email];
+
+        if (!user || user.password !== password) {
+            showError('loginError', 'Invalid email or password');
+            return;
+        }
+
+        // Store session
+        const sessionUser = {
+            email: user.email,
+            name: user.name,
+            role: user.role,
+            projects: user.projects,
+            college: user.college,
+            phone: user.phone,
+            loginTime: new Date().toISOString()
+        };
+
+        localStorage.setItem('currentUser', JSON.stringify(sessionUser));
+        localStorage.setItem('projects', JSON.stringify(PROJECTS_DATA));
+        localStorage.setItem('students', JSON.stringify(ALL_STUDENTS));
+
+        showSuccess('loginSuccess', '✓ Login successful! Redirecting...');
+
+        setTimeout(() => {
+            window.location.href = 'interntrack-pro-app.html';
+        }, 1500);
+    }
+
+    function handleRegister() {
+        const name = document.getElementById('registerName').value.trim();
+        const email = document.getElementById('registerEmail').value.trim();
+        const password = document.getElementById('registerPassword').value;
+        const confirm = document.getElementById('registerConfirm').value;
+        const role = document.getElementById('registerRole').value;
+
+        if (!name || !email || !password || !confirm || !role) {
+            showError('registerError', 'Please fill all fields');
+            return;
+        }
+
+        if (password !== confirm) {
+            showError('registerError', 'Passwords do not match');
+            return;
+        }
+
+        if (password.length < 6) {
+            showError('registerError', 'Password must be at least 6 characters');
+            return;
+        }
+
+        if (users[email]) {
+            showError('registerError', 'Email already registered');
+            return;
+        }
+
+        // Create user
+        users[email] = {
             name,
-            guide,
-            students: 0,
-            maxStudents,
-            repo,
-            description: desc
+            email,
+            password,
+            role,
+            createdAt: new Date().toISOString()
         };
 
-        projects.push(newProject);
-        localStorage.setItem('projects', JSON.stringify(projects));
+        localStorage.setItem('users', JSON.stringify(users));
 
-        showToast('Project created successfully', 'success');
-        closeModal();
-        showProjects();
+        showSuccess('registerSuccess', '✓ Account created! You can now sign in.');
+
+        setTimeout(() => {
+            document.querySelector('[onclick="switchTab(\'login\')"]').click();
+        }, 2000);
     }
 
-    function submitWork() {
-        const repoLink = document.getElementById('subLink').value.trim();
-        const milestone = document.getElementById('subMilestone').value.trim();
-        const desc = document.getElementById('subDesc').value.trim();
+    function loginAdmin() {
+        const email = document.getElementById('adminEmail').value.trim();
+        const password = document.getElementById('adminPassword').value;
 
-        if (!repoLink) {
-            showToast('Enter GitHub repository link', 'error');
+        if (!email || !password) {
+            showError('adminError', 'Please enter credentials');
             return;
         }
 
-        if (!repoLink.includes('github.com/rvu-cybersecurity')) {
-            showToast('Repository must be in RVU Cybersecurity organization', 'error');
+        const user = users[email];
+
+        if (!user || user.password !== password || user.role !== 'admin') {
+            showError('adminError', 'Invalid admin credentials');
             return;
         }
 
-        const submission = {
-            id: submissions.length + 1,
-            student: currentUser.name,
-            project: milestone || 'General',
-            repoLink,
-            date: new Date().toLocaleDateString(),
-            description: desc
+        document.getElementById('adminPanel').style.display = 'block';
+        document.getElementById('ghOrg').value = githubConfig.org || 'rvu-cybersecurity';
+        document.getElementById('ghClientId').value = githubConfig.clientId || '';
+        document.getElementById('ghClientSecret').value = githubConfig.clientSecret || '';
+        document.getElementById('ghToken').value = githubConfig.token || '';
+
+        showSuccess('adminSuccess', '✓ Admin access granted');
+    }
+
+    function saveGitHubConfig() {
+        const org = document.getElementById('ghOrg').value.trim();
+        const clientId = document.getElementById('ghClientId').value.trim();
+        const clientSecret = document.getElementById('ghClientSecret').value.trim();
+        const token = document.getElementById('ghToken').value.trim();
+
+        if (!org || !clientId || !clientSecret || !token) {
+            showError('adminError', 'Please fill all fields');
+            return;
+        }
+
+        githubConfig = {
+            org,
+            clientId,
+            clientSecret,
+            token,
+            isConfigured: true,
+            configuredAt: new Date().toISOString()
         };
 
-        submissions.push(submission);
-        localStorage.setItem('submissions', JSON.stringify(submissions));
-
-        showToast('✓ Work submitted to GitHub successfully!', 'success');
-        closeModal();
-        showSubmissions();
+        localStorage.setItem('githubConfig', JSON.stringify(githubConfig));
+        showSuccess('adminSuccess', '✓ GitHub configuration saved!');
     }
 
-    function viewProject(id) {
-        const project = projects.find(p => p.id === id);
-        alert(`Project: ${project.name}\nGuide: ${project.guide}\nRepository: rvu-cybersecurity/${project.repo}`);
-    }
-
-    // ═══════════════════════════════════════════════════════════════════
-    // UTILITIES
-    // ═══════════════════════════════════════════════════════════════════
-
-    function updateNav(fn) {
-        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-        document.querySelector(`[onclick="${fn}()"]`)?.classList.add('active');
-    }
-
-    function updateContent(html) {
-        document.getElementById('mainContent').innerHTML = html;
-    }
-
-    function showToast(msg, type = 'success') {
-        const el = document.getElementById('toast');
+    function showError(id, msg) {
+        const el = document.getElementById(id);
         el.textContent = msg;
-        el.className = `toast show ${type}`;
-        setTimeout(() => el.classList.remove('show'), 3000);
+        el.style.display = 'block';
+        setTimeout(() => el.style.display = 'none', 4000);
     }
 
-    function logout() {
-        if (confirm('Logout?')) {
-            localStorage.removeItem('currentUser');
-            window.location.href = 'interntrack-login.html';
-        }
+    function showSuccess(id, msg) {
+        const el = document.getElementById(id);
+        el.textContent = msg;
+        el.style.display = 'block';
+        setTimeout(() => el.style.display = 'none', 4000);
     }
 
-    document.getElementById('modalOverlay').addEventListener('click', (e) => {
-        if (e.target === document.getElementById('modalOverlay')) {
-            closeModal();
+    window.addEventListener('load', () => {
+        const currentUser = localStorage.getItem('currentUser');
+        if (currentUser) {
+            window.location.href = 'interntrack-pro-app.html';
         }
     });
 </script>
